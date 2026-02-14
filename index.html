@@ -8,15 +8,14 @@
     <style>
         /* --- CORE VARIABLES --- */
         :root {
-            --bg-color: #050505;
-            --surface-dark: #0a0a0f;
-            --surface-light: #13131f;
+            --bg-color: #020205; /* Ultra dark */
+            --surface-glass: rgba(20, 25, 40, 0.7); /* Glassmorphism */
             --text-main: #e0e6ed;
             --text-muted: #8892b0;
-            --accent: #00f0ff; /* Cyber Cyan */
-            --accent-secondary: #7000ff; /* Deep Neon Purple */
+            --accent-cyan: #00f0ff; /* Cyber Cyan */
+            --accent-purple: #bd00ff; /* Neon Purple */
             --success: #00ff9d;
-            --grid-line: rgba(255, 255, 255, 0.03);
+            --grid-line: rgba(0, 240, 255, 0.05);
             --font-main: 'Inter', sans-serif;
             --font-code: 'JetBrains Mono', monospace;
         }
@@ -31,84 +30,92 @@
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
+            /* The glowing blueprint grid background */
             background-image: 
                 linear-gradient(var(--grid-line) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 40px 40px; /* Blueprint Grid Effect */
+            background-size: 50px 50px;
+            background-position: center center;
         }
 
         /* --- UTILITIES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .mono { font-family: var(--font-code); }
-        .accent-text { color: var(--accent); }
+        .mono { font-family: var(--font-code); letter-spacing: 1px; }
+        .cyan { color: var(--accent-cyan); }
+        .purple { color: var(--accent-purple); }
+        
+        /* Glowing Buttons */
         .btn {
             display: inline-block;
-            padding: 12px 28px;
+            padding: 15px 35px;
             background: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
             font-family: var(--font-code);
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            font-weight: bold;
             position: relative;
             overflow: hidden;
-            font-weight: bold;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
         }
         .btn:hover {
-            background: var(--accent);
+            background: var(--accent-cyan);
             color: #000;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .btn:hover::before { left: 100%; }
+
+        /* --- SECTION HEADERS --- */
+        .section-header {
+            margin-bottom: 60px;
+            border-left: 3px solid var(--accent-cyan);
+            padding-left: 20px;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
         }
 
-        /* --- SYSTEM STATUS BAR (TOP) --- */
-        .status-bar {
-            background: #000;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 8px 0;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-family: var(--font-code);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .status-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--success);
-            border-radius: 50%;
-            margin-right: 8px;
-            box-shadow: 0 0 8px var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION (THE COCKPIT) --- */
         header {
-            height: 90vh;
+            min-height: 95vh;
             display: flex;
             align-items: center;
             position: relative;
+            overflow: hidden;
         }
-        header::after {
+        /* Glowing orb effect behind hero */
+        header::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(to top, var(--bg-color), transparent);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+            filter: blur(100px);
+            z-index: -1;
         }
         .hero-content h1 {
-            font-size: 4.5rem;
+            font-size: 5rem;
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1;
             margin-bottom: 20px;
         }
-        .hero-content h1 span {
-            background: linear-gradient(to right, var(--accent), var(--accent-secondary));
+        /* Gradient text effect */
+        .hero-title-gradient {
+            background: linear-gradient(to right, var(--accent-cyan), var(--accent-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -116,236 +123,320 @@
             font-family: var(--font-code);
             color: var(--success);
             margin-bottom: 40px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             min-height: 1.6em;
+            display: flex; align-items: center;
         }
-        .cursor { animation: blink 1s step-end infinite; }
+        .cursor { animation: blink 1s step-end infinite; background: var(--success); width: 10px; height: 1.2em; margin-left: 5px; }
 
-        /* --- CARDS (GLASSMORPHISM) --- */
+        /* --- GLASSMORPHISM CARDS --- */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 50px;
+            gap: 30px;
         }
-        .tech-card {
-            background: rgba(19, 19, 31, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        .tech-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-        .icon-box {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        /* --- PORTFOLIO (THE HANGAR) --- */
-        .project-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 100px;
-            gap: 50px;
-        }
-        .project-row.reverse { flex-direction: row-reverse; }
-        
-        .project-info { flex: 1; }
-        .project-visual {
-            flex: 1;
-            height: 350px;
-            background: #111;
-            border: 1px solid var(--accent);
+        .glass-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: 4px;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
         }
-        /* Placeholder styling */
-        .project-visual::before {
-            content: '[ IMAGE SIGNAL LOST ]';
-            color: var(--accent);
-            font-family: var(--font-code);
-            font-size: 0.8rem;
-            opacity: 0.7;
+        /* Hover effects for cards */
+        .glass-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            transform: translateY(-5px);
         }
-        /* Tech Specs Table */
-        .specs-table {
-            margin-top: 20px;
+        /* Little technical corner accents */
+        .glass-card::after {
+            content: ''; position: absolute; top: 0; right: 0;
+            width: 20px; height: 20px;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            border-right: 2px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .glass-card:hover::after { border-color: var(--accent-cyan); }
+        
+        .card-icon { font-size: 2.5rem; margin-bottom: 20px; }
+
+        /* --- PORTFOLIO: DEPLOYED ARCHITECTURES (Screenshots) --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-bottom: 100px;
+        }
+        .monitor-frame {
+            background: #000;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            position: relative;
+            transition: 0.4s;
+        }
+        .monitor-frame:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 40px rgba(189, 0, 255, 0.3);
+        }
+        /* The screen inside the monitor */
+        .monitor-screen {
             width: 100%;
-            font-family: var(--font-code);
-            font-size: 0.85rem;
+            height: 350px; /* Fixed height for consistency */
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        .monitor-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures images fill the space without stretching */
+            object-position: top center; /* Focus on top of dashboards */
+            transition: transform 0.5s;
+            filter: brightness(0.8) contrast(1.1); /* Slight "screen look" filter */
+        }
+        .monitor-frame:hover img {
+            transform: scale(1.05); /* Slight zoom on hover */
+            filter: brightness(1) contrast(1);
+        }
+        .monitor-caption {
+            margin-top: 15px;
             border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        .specs-table td {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-muted);
-        }
-        .specs-table td:last-child {
-            text-align: right;
-            color: var(--accent);
+            padding-top: 15px;
         }
 
-        /* --- ABOUT (PILOT SECTION) --- */
-        .about-section {
-            background: linear-gradient(90deg, rgba(10,10,15,0.9), rgba(10,10,15,0.7));
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 100px 0;
+        /* --- PORTFOLIO: HARDWARE (Existing stuff) --- */
+        .hw-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 80px;
+            gap: 50px;
+            background: rgba(255,255,255,0.02);
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
-        .badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.1);
-            padding: 5px 10px;
-            font-size: 0.7rem;
-            border-radius: 4px;
-            margin-right: 10px;
-            font-family: var(--font-code);
-            color: var(--text-main);
+        .hw-info { flex: 1; }
+        /* Placeholder for hardware images if you add them later */
+        .hw-visual {
+            flex: 1; height: 300px; background: #0a0a14;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; justify-content: center; align-items: center;
+            font-family: var(--font-code); color: var(--text-muted);
+            position: relative; overflow: hidden;
+        }
+        /* Scanning line animation for hardware placeholders */
+        .hw-visual::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--accent-cyan);
+            animation: scan 3s linear infinite;
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-pilot {
+            background: linear-gradient(to right, rgba(10,10,20,0.9), rgba(20,10,30,0.8));
+            padding: 120px 0;
+            position: relative;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .tech-badge {
+            display: inline-block; padding: 5px 12px;
+            margin: 5px 5px 5px 0;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            font-family: var(--font-code); font-size: 0.8rem;
+            text-transform: uppercase;
         }
 
         /* --- ANIMATIONS --- */
-        @keyframes pulse {
-            0% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.4); }
-            70% { opacity: 1; box-shadow: 0 0 0 10px rgba(0, 255, 157, 0); }
-            100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 157, 0); }
-        }
         @keyframes blink { 50% { opacity: 0; } }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
 
         /* --- MOBILE --- */
         @media (max-width: 768px) {
-            h1 { font-size: 2.8rem; }
-            .project-row, .project-row.reverse { flex-direction: column; }
-            .project-visual { width: 100%; height: 250px; margin-bottom: 20px; }
+            h1 { font-size: 3rem; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .hw-row { flex-direction: column; }
+            .hw-visual { width: 100%; height: 200px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="status-bar">
-        <div class="container" style="display:flex; width:100%; justify-content:space-between;">
-            <div><span class="status-indicator"></span>SYSTEM: ONLINE</div>
-            <div class="mono">LOC: GERMANY // STATUS: AVAILABLE</div>
-        </div>
-    </div>
-
     <header>
         <div class="container hero-content">
-            <div class="mono" style="color: var(--accent); margin-bottom: 20px;">// EMENA HOME TECH_</div>
-            <h1>Automated<br><span>Infrastructure.</span></h1>
+            <div class="mono cyan" style="margin-bottom: 20px;">> SYSTEM READY // PILOT: ACTIVE</div>
+            <h1>Automated <span class="hero-title-gradient">Flight Deck</span><br>For Your Home.</h1>
             
             <div class="typing-container">
-                > <span id="typewriter"></span><span class="cursor">_</span>
+                 > <span id="typewriter"></span><span class="cursor"></span>
             </div>
             
-            <div style="margin-top: 40px;">
+            <div style="margin-top: 50px;">
                 <a href="#contact" class="btn">Initiate Protocol</a>
             </div>
         </div>
     </header>
 
-    <section id="services">
+    <section id="services" style="padding: 120px 0;">
         <div class="container">
-            <h2 style="margin-bottom: 40px;">System Modules</h2>
+            <div class="section-header">
+                <span class="mono cyan">01 // CORE MODULES</span>
+                <h2>System Competencies</h2>
+            </div>
             <div class="card-grid">
-                <div class="tech-card">
-                    <div class="icon-box">🧠</div>
-                    <h3>Logic & Automation</h3>
-                    <p class="mono" style="font-size: 0.8rem; color: var(--accent); margin-bottom: 10px;">NODE: SOFTWARE</p>
-                    <p>Advanced presence detection and energy management algorithms. Systems that react to your routine, not the other way around.</p>
+                <div class="glass-card">
+                    <div class="card-icon">🧠</div>
+                    <h3>Adaptive Logic</h3>
+                    <p class="mono purple" style="font-size: 0.8rem; margin-bottom: 15px;">NODE: AUTOMATION</p>
+                    <p>Moving beyond simple timers. I architect presence-based automation that reacts to occupancy and environmental data, mirroring complex avionics logic.</p>
                 </div>
-                <div class="tech-card">
-                    <div class="icon-box">📟</div>
-                    <h3>Bespoke Hardware</h3>
-                    <p class="mono" style="font-size: 0.8rem; color: var(--accent); margin-bottom: 10px;">NODE: PHYSICAL</p>
-                    <p>Custom fabricated ESP32 sensors and displays. Designed for specific use-cases where off-the-shelf products fail.</p>
+                <div class="glass-card">
+                    <div class="card-icon">📟</div>
+                    <h3>Bespoke Interfaces</h3>
+                    <p class="mono purple" style="font-size: 0.8rem; margin-bottom: 15px;">NODE: HARDWARE</p>
+                    <p>Design and fabrication of custom ESP32 sensors and displays for unique use-cases that off-the-shelf consumer hardware cannot address.</p>
                 </div>
-                <div class="tech-card">
-                    <div class="icon-box">🛡️</div>
-                    <h3>Local Redundancy</h3>
-                    <p class="mono" style="font-size: 0.8rem; color: var(--accent); margin-bottom: 10px;">NODE: NETWORK</p>
-                    <p>Cloud-free architecture. Your home continues to function with 100% operational capability during internet outages.</p>
+                <div class="glass-card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Critical Redundancy</h3>
+                    <p class="mono purple" style="font-size: 0.8rem; margin-bottom: 15px;">NODE: SECURITY</p>
+                    <p>Cloud-free architecture. Your home infrastructure continues to function with 100% operational capability during internet outages.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="portfolio">
+    <section id="portfolio" style="padding: 100px 0; background: rgba(0,0,0,0.3);">
         <div class="container">
-            <h2 style="margin-bottom: 60px;">Hardware Inventory</h2>
-
-            <div class="project-row">
-                <div class="project-info">
-                    <h3>ESP32-C6 Micro-Interface</h3>
-                    <p style="margin-bottom: 20px;">A dedicated room controller running on the RISC-V architecture. Provides instant access to lighting scenes and climate control without the latency of WiFi-based tablets.</p>
-                    
-                    <table class="specs-table">
-                        <tr><td>Chipset</td><td>ESP32-C6-N16</td></tr>
-                        <tr><td>Display</td><td>1.47" IPS Touch</td></tr>
-                        <tr><td>Connectivity</td><td>WiFi 6 / Zigbee / Matter</td></tr>
-                        <tr><td>Protocol</td><td>MQTT / ESPHome</td></tr>
-                    </table>
-                </div>
-                <div class="project-visual">
+            <div class="section-header">
+                <span class="mono cyan">02 // VISUAL TELEMETRY</span>
+                <h2>Deployed Architectures</h2>
+            </div>
+            
+            <div class="dashboard-grid">
+                
+                <div class="monitor-frame">
+                    <div class="monitor-screen">
+                        <img src="dash-security.png" alt="Home Assistant Security Dashboard with NVR">
                     </div>
+                    <div class="monitor-caption">
+                        <h4 class="mono cyan">PROJECT: UNIFIED PERIMETER</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Centralized NVR integration showing real-time feeds from diverse camera hardware with AI person detection.</p>
+                    </div>
+                </div>
+
+                <div class="monitor-frame">
+                    <div class="monitor-screen">
+                        <img src="dash-shutters.png" alt="Automated Shutter Control Dashboard">
+                    </div>
+                    <div class="monitor-caption">
+                        <h4 class="mono cyan">PROJECT: ENVIRONMENTAL ZONES</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Granular control over estate-wide shading. Automation based on sun azimuth and interior occupancy.</p>
+                    </div>
+                </div>
+
+                <div class="monitor-frame" style="grid-column: 1 / -1;">
+                    <div class="monitor-screen" style="height: 500px;">
+                         <img src="dash-energy.png" alt="Detailed Energy Powerflow Dashboard">
+                    </div>
+                    <div class="monitor-caption">
+                        <h4 class="mono cyan">PROJECT: POWERFLOW TELEMETRY</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Real-time visualization of critical energy infrastructure: Solar generation, battery storage state-of-charge, and grid dependence.</p>
+                    </div>
+                </div>
+
+                 <div class="monitor-frame">
+                    <div class="monitor-screen">
+                         <img src="dash-scenes.png" alt="Home Assistant Scenes Dashboard">
+                    </div>
+                    <div class="monitor-caption">
+                        <h4 class="mono cyan">PROJECT: CONTEXTUAL ACTIVATION</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">One-touch scene deployment for complex lighting and media states across multiple zones.</p>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="project-row reverse">
-                <div class="project-info">
-                    <h3>Desktop Command Deck</h3>
-                    <p style="margin-bottom: 20px;">A high-fidelity auxiliary display for the workstation. Bridges the gap between PC telemetry (AIDA64) and Home Assistant, allowing control of the environment from the cockpit.</p>
-                    
-                    <table class="specs-table">
-                        <tr><td>Display</td><td>3.5" IPS Panel</td></tr>
-                        <tr><td>Interface</td><td>USB Type-C</td></tr>
-                        <tr><td>Resolution</td><td>320 x 480</td></tr>
-                        <tr><td>Integration</td><td>AIDA64 / HASS.io</td></tr>
-                    </table>
-                </div>
-                <div class="project-visual">
+            <div class="section-header" style="margin-top: 150px;">
+                <span class="mono cyan">03 // PHYSICAL ASSETS</span>
+                <h2>Hardware Fabrication</h2>
+            </div>
+            <div class="hw-row">
+                <div class="hw-info">
+                    <h3 class="mono">ESP32-C6 Micro-Interface</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-muted);">A dedicated room controller running on RISC-V architecture. Provides instant access to lighting scenes and climate control without the latency of WiFi-based tablets.</p>
+                    <div class="mono" style="font-size: 0.8rem;">
+                        <span style="color: var(--text-muted);">PROTOCOL:</span> <span class="cyan">MQTT / ESPHome</span><br>
+                        <span style="color: var(--text-muted);">DISPLAY:</span> <span class="cyan">1.47" IPS Touch</span>
                     </div>
+                </div>
+                <div class="hw-visual">
+                    [ HARDWARE IMAGE SIGNAL LOST ]
+                </div>
+            </div>
+
+             <div class="hw-row">
+                <div class="hw-info">
+                    <h3 class="mono">Desktop Command Deck</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-muted);">Bridges the gap between high-performance PC gaming and smart home control. Integrates PC thermals (AIDA64) alongside room controls.</p>
+                    <div class="mono" style="font-size: 0.8rem;">
+                         <span style="color: var(--text-muted);">INTERFACE:</span> <span class="cyan">USB Type-C</span><br>
+                        <span style="color: var(--text-muted);">DISPLAY:</span> <span class="cyan">3.5" IPS Panel</span>
+                    </div>
+                </div>
+                <div class="hw-visual">
+                    [ HARDWARE IMAGE SIGNAL LOST ]
+                </div>
             </div>
 
         </div>
     </section>
 
-    <section class="about-section">
+    <section class="about-pilot">
         <div class="container">
             <div style="max-width: 800px;">
-                <div class="mono" style="color: var(--success); margin-bottom: 15px;">// OPERATOR_LOG</div>
-                <h2>Built with Aviation Standards</h2>
-                <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px;">
-                    In aviation, redundancy and reliability are not optional—they are required. Emena Home Tech applies these same principles to home automation. 
-                    Founded by an active Pilot and IT Administrator, every system is designed to fail-safe, ensuring that your smart home remains a tool, not a burden.
+                 <div class="section-header" style="border-color: var(--accent-purple);">
+                    <span class="mono purple">04 // OPERATOR LOG</span>
+                    <h2>Aviation-Grade Reliability</h2>
+                </div>
+                <p style="font-size: 1.2rem; color: var(--text-main); margin-bottom: 30px; leading-relaxed">
+                    In aviation and critical IT infrastructure, redundancy is not optional—it is a requirement. Emena Home Tech applies these same rigorous principles to home automation. 
+                </p>
+                <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px;">
+                    Founded by an active Pilot and IT Administrator, every system is designed with fail-safes, ensuring that your smart home remains a functional tool, not a burden, even when external networks fail.
                 </p>
                 <div>
-                    <span class="badge">ESP32 ARCHITECTURE</span>
-                    <span class="badge">C++ FIRMWARE</span>
-                    <span class="badge">NETWORK SECURITY</span>
+                    <span class="tech-badge">ESP32 ARCHITECTURE</span>
+                    <span class="tech-badge">C++ FIRMWARE</span>
+                    <span class="tech-badge">NETWORK SECURITY</span>
+                    <span class="tech-badge">HOME ASSISTANT</span>
+                    <span class="tech-badge">ZIGBEE MESH</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" style="text-align: center; padding: 120px 0;">
+    <section id="contact" style="text-align: center; padding: 150px 0;">
         <div class="container">
-            <h2 style="font-size: 3rem; margin-bottom: 20px;">Ready to Deploy?</h2>
-            <p style="margin-bottom: 40px; color: var(--text-muted);">Current availability for custom integration projects is open.</p>
-            <a href="mailto:contact@emenahometech.online" class="btn">Establish Comms</a>
+            <h2 style="font-size: 3rem; margin-bottom: 20px; font-weight: 800;">Ready to Deploy?</h2>
+            <p style="margin-bottom: 50px; color: var(--text-muted); font-size: 1.2rem;">Current availability for custom integration projects is open.</p>
+            <a href="mailto:contact@emenahometech.online" class="btn" style="padding: 20px 50px; font-size: 1.2rem;">Establish Comms</a>
         </div>
     </section>
 
-    <footer style="padding: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05);">
+    <footer style="padding: 50px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: #010103;">
         <p class="mono" style="font-size: 0.8rem; color: #555;">© 2026 EMENA HOME TECH // ALL SYSTEMS NOMINAL</p>
     </footer>
 
     <script>
-        const text = "Integrating ESP32 Hardware with Intelligent Environments.";
+        const text = "Integrating Custom Hardware with Intelligent Environments...";
         const typeWriterElement = document.getElementById('typewriter');
         let i = 0;
 
@@ -353,11 +444,9 @@
             if (i < text.length) {
                 typeWriterElement.innerHTML += text.charAt(i);
                 i++;
-                setTimeout(typeWriter, 50); // Speed of typing
+                setTimeout(typeWriter, 75); // Typing speed
             }
         }
-        
-        // Start typing when page loads
         window.onload = typeWriter;
     </script>
 </body>
