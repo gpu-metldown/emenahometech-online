@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emena Home Tech | Custom Smart Home Solutions</title>
+    <title>Emena Home Tech | Precision Smart Home Integrations</title>
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
@@ -13,6 +13,7 @@
             --text-muted: #94a3b8;
             --accent: #38bdf8; /* Tech Blue */
             --accent-glow: rgba(56, 189, 248, 0.3);
+            --border-color: rgba(255,255,255,0.05);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -78,7 +79,7 @@
             background: var(--card-bg);
             padding: 30px;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
             transition: border-color 0.3s;
         }
         .card:hover { border-color: var(--accent); }
@@ -93,9 +94,22 @@
             border-radius: 12px;
             overflow: hidden;
             margin-bottom: 30px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
         }
         .showcase-text { padding: 40px; flex: 1; }
+        .showcase-text h3 { margin-bottom: 10px; color: var(--text-main); }
+        .showcase-text .tech-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+        
+        /* Placeholder for images - Replace with <img src="..."> later */
         .showcase-img-placeholder {
             width: 400px;
             height: 300px;
@@ -105,7 +119,15 @@
             justify-content: center;
             color: var(--text-muted);
             font-size: 0.9rem;
-            border-left: 1px solid rgba(255,255,255,0.05);
+            border-left: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        /* --- ABOUT ME (CV SECTION) --- */
+        .about-text {
+            max-width: 800px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
         }
         
         /* --- CONTACT --- */
@@ -114,13 +136,14 @@
             background: var(--card-bg);
             padding: 60px;
             border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
         /* --- MOBILE TWEAKS --- */
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             .showcase-item { flex-direction: column; }
-            .showcase-img-placeholder { width: 100%; height: 200px; border-left: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .showcase-img-placeholder { width: 100%; height: 200px; border-left: none; border-bottom: 1px solid var(--border-color); }
         }
     </style>
 </head>
@@ -129,26 +152,26 @@
     <header>
         <div class="container">
             <h1>Make Your Home <br><span>Intelligent.</span></h1>
-            <p class="hero-sub">Custom smart home integrations using Home Assistant, ESP32 micro-controllers, and bespoke dashboard design.</p>
-            <a href="#contact" class="btn">Get a Quote</a>
+            <p class="hero-sub">Emena Home Tech builds custom automation ecosystems using ESP32 micro-controllers, Home Assistant, and bespoke dashboard design.</p>
+            <a href="#contact" class="btn">Request Consultation</a>
         </div>
     </header>
 
     <section id="services">
         <div class="container">
-            <h2>What I Do</h2>
+            <h2>Core Competencies</h2>
             <div class="grid">
                 <div class="card">
                     <h3>💡 Automation Logic</h3>
-                    <p>Moving beyond simple timers. I build presence-based automation that reacts to you, saving energy and increasing comfort.</p>
+                    <p>Moving beyond simple timers. I architect presence-based automation that reacts to occupancy, saving energy and increasing comfort without user input.</p>
                 </div>
                 <div class="card">
                     <h3>🖥️ Custom Dashboards</h3>
-                    <p>Beautiful, wall-mounted or desktop control panels powered by Home Assistant. No more juggling 10 different apps.</p>
+                    <p>Centralized control panels powered by Home Assistant. Integrating disparate systems (Zigbee, WiFi, Matter) into a single, unified interface.</p>
                 </div>
                 <div class="card">
-                    <h3>⚡ Hardware Integration</h3>
-                    <p>I build custom ESP32 sensors and displays for things you can't buy in stores. Monitoring, displays, and hidden sensors.</p>
+                    <h3>⚡ Hardware Engineering</h3>
+                    <p>Design and fabrication of custom ESP32 sensors and displays for unique use-cases that off-the-shelf consumer hardware cannot address.</p>
                 </div>
             </div>
         </div>
@@ -156,42 +179,62 @@
 
     <section id="portfolio">
         <div class="container">
-            <h2>Featured Builds</h2>
+            <h2>Technical Showcase</h2>
             
             <div class="showcase-item">
                 <div class="showcase-text">
-                    <h3>The Desktop Command Center</h3>
-                    <p>Built using a <strong>3.5 Inch IPS Type-C Display</strong>. This secondary monitor sits on your desk to track PC metrics (GPU/CPU) or control your entire home office lighting and temperature without minimizing your work.</p>
+                    <span class="tech-tag">ESP32-C6 | 1.47" Touch LCD</span>
+                    <h3>The "Hearth" Room Controller</h3>
+                    <p>A room-specific micro-interface designed to replace bulky wall tablets. This discrete controller mounts on standard switch plates to offer instant control over local lighting, HVAC, and media. Running custom C++ firmware on the ESP32-C6 RISC-V architecture for instant response times and zero cloud dependence.</p>
                 </div>
                 <div class="showcase-img-placeholder">
-                    [Place Photo of 3.5" Screen Here]
+                    [Image: Wall Mounted Controller]
                 </div>
             </div>
 
             <div class="showcase-item">
                 <div class="showcase-text">
-                    <h3>Room-Scale Micro Controllers</h3>
-                    <p>Utilizing the <strong>ESP32-C6 with 1.47" Touch LCD</strong>. A discreet, custom-coded interface for individual rooms. Adjust the thermostat or check the weather from a device smaller than a light switch.</p>
+                    <span class="tech-tag">3.5" IPS Display | USB-C</span>
+                    <h3>System Monitoring Bridge</h3>
+                    <p>Bridging the gap between high-performance PC gaming and smart home control. This dashboard integrates directly with PC hardware stats (GPU/CPU thermals via AIDA64) while simultaneously offering touch controls for office lighting and door locks. A seamless fusion of IT administration and home automation.</p>
                 </div>
                 <div class="showcase-img-placeholder">
-                    [Place Photo of ESP32-C6 LCD Here]
+                    [Image: Desktop Dashboard Setup]
                 </div>
             </div>
 
+        </div>
+    </section>
+
+    <section id="about" style="background-color: #0f121f;">
+        <div class="container">
+            <h2 style="margin-bottom: 30px;">Precision Engineering</h2>
+            <div class="about-text">
+                <p style="margin-bottom: 20px;">
+                    Emena Home Tech was founded on a simple principle: smart homes should be as reliable as critical infrastructure. 
+                    Combining professional <strong>IT Administration</strong> experience with <strong>Aviation-standard</strong> operating procedures, I build systems 
+                    that prioritize local control, stability, and redundancy.
+                </p>
+                <p>
+                    Unlike off-the-shelf solutions that rely on unstable cloud connections, my integrations are built on 
+                    robust local hardware (ESP32, Zigbee, Home Assistant), ensuring your home runs smoothly 
+                    even when the internet goes down.
+                </p>
+            </div>
         </div>
     </section>
 
     <section id="contact">
         <div class="container">
             <div class="contact-box">
-                <h2>Ready to upgrade your home?</h2>
-                <p style="margin: 20px 0;">I am currently accepting new integration projects.</p>
-                <a href="mailto:your-email@example.com" class="btn">Contact Me</a>
+                <h2>Ready to upgrade your infrastructure?</h2>
+                <p style="margin: 20px 0;">Accepting new integration projects and technical consultation requests.</p>
+                <a href="mailto:contact@emenahometech.online" class="btn">Contact Me</a>
             </div>
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem;">
+    <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border-color);">
         &copy; 2026 Emena Home Tech. All Rights Reserved.
     </footer>
 
