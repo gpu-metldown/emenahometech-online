@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emena Home Tech | Custom Smart Home Solutions</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0b0d17; /* Deep Navy/Black */
+            --card-bg: #15192b;
+            --text-main: #e0e6ed;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8; /* Tech Blue */
+            --accent-glow: rgba(56, 189, 248, 0.3);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        section { padding: 80px 0; }
+        
+        /* --- HERO SECTION --- */
+        header {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0b0d17 70%);
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+        h1 span { color: var(--accent); }
+        .hero-sub {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--accent);
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px var(--accent-glow);
+        }
+
+        /* --- SERVICES GRID --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: border-color 0.3s;
+        }
+        .card:hover { border-color: var(--accent); }
+        .card h3 { font-size: 1.5rem; margin-bottom: 15px; }
+        .card p { color: var(--text-muted); }
+
+        /* --- SHOWCASE (YOUR HARDWARE) --- */
+        .showcase-item {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .showcase-text { padding: 40px; flex: 1; }
+        .showcase-img-placeholder {
+            width: 400px;
+            height: 300px;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-left: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        /* --- CONTACT --- */
+        .contact-box {
+            text-align: center;
+            background: var(--card-bg);
+            padding: 60px;
+            border-radius: 12px;
+        }
+
+        /* --- MOBILE TWEAKS --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .showcase-item { flex-direction: column; }
+            .showcase-img-placeholder { width: 100%; height: 200px; border-left: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Make Your Home <br><span>Intelligent.</span></h1>
+            <p class="hero-sub">Custom smart home integrations using Home Assistant, ESP32 micro-controllers, and bespoke dashboard design.</p>
+            <a href="#contact" class="btn">Get a Quote</a>
+        </div>
+    </header>
+
+    <section id="services">
+        <div class="container">
+            <h2>What I Do</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>💡 Automation Logic</h3>
+                    <p>Moving beyond simple timers. I build presence-based automation that reacts to you, saving energy and increasing comfort.</p>
+                </div>
+                <div class="card">
+                    <h3>🖥️ Custom Dashboards</h3>
+                    <p>Beautiful, wall-mounted or desktop control panels powered by Home Assistant. No more juggling 10 different apps.</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Hardware Integration</h3>
+                    <p>I build custom ESP32 sensors and displays for things you can't buy in stores. Monitoring, displays, and hidden sensors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <h2>Featured Builds</h2>
+            
+            <div class="showcase-item">
+                <div class="showcase-text">
+                    <h3>The Desktop Command Center</h3>
+                    <p>Built using a <strong>3.5 Inch IPS Type-C Display</strong>. This secondary monitor sits on your desk to track PC metrics (GPU/CPU) or control your entire home office lighting and temperature without minimizing your work.</p>
+                </div>
+                <div class="showcase-img-placeholder">
+                    [Place Photo of 3.5" Screen Here]
+                </div>
+            </div>
+
+            <div class="showcase-item">
+                <div class="showcase-text">
+                    <h3>Room-Scale Micro Controllers</h3>
+                    <p>Utilizing the <strong>ESP32-C6 with 1.47" Touch LCD</strong>. A discreet, custom-coded interface for individual rooms. Adjust the thermostat or check the weather from a device smaller than a light switch.</p>
+                </div>
+                <div class="showcase-img-placeholder">
+                    [Place Photo of ESP32-C6 LCD Here]
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="contact-box">
+                <h2>Ready to upgrade your home?</h2>
+                <p style="margin: 20px 0;">I am currently accepting new integration projects.</p>
+                <a href="mailto:your-email@example.com" class="btn">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem;">
+        &copy; 2026 Emena Home Tech. All Rights Reserved.
+    </footer>
+
+</body>
+</html>
