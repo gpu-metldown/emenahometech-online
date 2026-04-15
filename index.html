@@ -1,284 +1,679 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emena Home Tech | Systems Architecture</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* --- CORE VARIABLES --- */
-        :root {
-            --bg-color: #020205;
-            --surface-glass: rgba(20, 25, 40, 0.7);
-            --surface-terminal: #0d1117;
-            --text-main: #e0e6ed;
-            --text-muted: #8892b0;
-            --accent-cyan: #00f0ff;
-            --accent-purple: #bd00ff;
-            --accent-orange: #ff9f43; /* New accent for Logic */
-            --success: #00ff9d;
-            --grid-line: rgba(0, 240, 255, 0.05);
-            --font-main: 'Inter', sans-serif;
-            --font-code: 'JetBrains Mono', monospace;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emena Home Tech — Smart Home Integration</title>
+  <meta name="description" content="Professional smart home automation engineered with aviation-grade precision. Lighting, security, climate, energy and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #0a0e14; color: #f0ece4; overflow-x: hidden; }
 
-        /* --- RESET & BASE --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        
-        body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-image: 
-                linear-gradient(var(--grid-line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
+    /* ── NAV ── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px; padding: 0 2.5rem;
+      transition: background 0.4s, border-bottom 0.4s, backdrop-filter 0.4s;
+    }
+    #navbar.solid {
+      background: rgba(10,14,20,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,169,110,0.18);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-badge {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #c8a96e, #e8c98e);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #0a0e14; flex-shrink: 0;
+    }
+    .nav-logo-name { color: #f0ece4; font-size: 19px; font-weight: 600; letter-spacing: 0.04em; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      color: rgba(240,236,228,0.7); text-decoration: none; font-size: 14px;
+      letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #c8a96e; }
+    .nav-cta {
+      background: transparent; border: 1px solid #c8a96e; color: #c8a96e;
+      padding: 8px 22px; font-family: inherit; font-size: 13px;
+      letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+      transition: all 0.2s; border-radius: 2px;
+    }
+    .nav-cta:hover { background: #c8a96e; color: #0a0e14; }
+    .hamburger {
+      display: none; background: none; border: none; color: #f0ece4;
+      font-size: 26px; cursor: pointer; line-height: 1;
+    }
+    .mobile-menu {
+      display: none; position: fixed; top: 68px; left: 0; right: 0;
+      background: rgba(10,14,20,0.99); border-bottom: 1px solid rgba(200,169,110,0.2);
+      padding: 1.5rem 2.5rem; flex-direction: column; gap: 1.2rem; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: #f0ece4; text-decoration: none; font-size: 20px; letter-spacing: 0.04em; }
 
-        /* --- UTILITIES --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .mono { font-family: var(--font-code); letter-spacing: 1px; }
-        .cyan { color: var(--accent-cyan); }
-        .purple { color: var(--accent-purple); }
-        .orange { color: var(--accent-orange); }
-        
-        /* Buttons */
-        .btn {
-            display: inline-block; padding: 15px 35px;
-            background: transparent; color: var(--accent-cyan);
-            border: 1px solid var(--accent-cyan);
-            font-family: var(--font-code); text-decoration: none;
-            text-transform: uppercase; letter-spacing: 2px;
-            font-weight: bold; position: relative; overflow: hidden;
-            transition: all 0.4s ease;
-        }
-        .btn:hover { background: var(--accent-cyan); color: #000; box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); }
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: #0a0e14;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridDrift 25s linear infinite;
+    }
+    .hero-horizon {
+      position: absolute; bottom: 22%; left: 50%; transform: translateX(-50%);
+      width: 70vw; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,169,110,0.45), transparent);
+    }
+    .hero-altline {
+      position: absolute; left: 0; right: 0; height: 1px; background: rgba(126,184,212,0.06);
+    }
+    .hero-compass {
+      position: absolute; top: 10%; right: 7%; opacity: 0.1;
+      font-size: 100px; color: #c8a96e; user-select: none; line-height: 1;
+      animation: compassSpin 80s linear infinite;
+    }
+    .hero-inner { position: relative; text-align: center; padding: 0 2rem; max-width: 920px; }
+    .hero-tag {
+      display: inline-block; border: 1px solid rgba(200,169,110,0.4);
+      padding: 5px 20px; margin-bottom: 2rem; border-radius: 2px;
+      color: #c8a96e; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    }
+    .hero-h1 {
+      font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 300; line-height: 1.05;
+      margin-bottom: 1.5rem; letter-spacing: -0.01em; color: #f0ece4;
+    }
+    .hero-h1 em { color: #c8a96e; font-style: italic; }
+    .hero-sub {
+      color: rgba(240,236,228,0.58); font-size: clamp(1rem, 2vw, 1.15rem);
+      max-width: 560px; margin: 0 auto 3rem; line-height: 1.75; font-weight: 300;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #c8a96e; border: none; color: #0a0e14;
+      padding: 14px 38px; border-radius: 2px; cursor: pointer;
+      font-family: inherit; font-size: 14px; letter-spacing: 0.12em;
+      text-transform: uppercase; font-weight: 600; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #e8c98e; }
+    .btn-secondary {
+      background: transparent; border: 1px solid rgba(240,236,228,0.3); color: #f0ece4;
+      padding: 14px 38px; border-radius: 2px; cursor: pointer;
+      font-family: inherit; font-size: 14px; letter-spacing: 0.12em;
+      text-transform: uppercase; transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: #c8a96e; color: #c8a96e; }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 3rem; margin-top: 5rem;
+      border-top: 1px solid rgba(200,169,110,0.15); padding-top: 2rem; flex-wrap: wrap;
+    }
+    .hero-stat-num { color: #c8a96e; font-size: 28px; font-weight: 600; }
+    .hero-stat-label { color: rgba(240,236,228,0.4); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
 
-        /* --- HEADERS --- */
-        .section-header {
-            margin-bottom: 60px;
-            border-left: 3px solid var(--accent-cyan);
-            padding-left: 20px;
-        }
-        .section-header h2 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: -1px; }
+    /* ── SECTIONS ── */
+    section { padding: 7rem 2rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; }
+    .section-header.left { text-align: left; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 1.2rem;
+      color: #c8a96e; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .section-tag::before, .section-tag::after { content: ''; display: block; width: 24px; height: 1px; background: #c8a96e; }
+    .section-h2 {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
+      letter-spacing: -0.01em; line-height: 1.15; color: #f0ece4;
+    }
 
-        /* --- HERO --- */
-        header {
-            min-height: 95vh; display: flex; align-items: center; position: relative; overflow: hidden;
-        }
-        header::before {
-            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
-            filter: blur(100px); z-index: -1;
-        }
-        .hero-content h1 { font-size: 5rem; font-weight: 800; line-height: 1; margin-bottom: 20px; }
-        .hero-title-gradient {
-            background: linear-gradient(to right, var(--accent-cyan), var(--accent-purple));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+    /* ── SERVICES ── */
+    #services { background: #0d1119; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1px; background: rgba(200,169,110,0.1);
+      border: 1px solid rgba(200,169,110,0.1); margin-top: 4rem;
+    }
+    .service-card {
+      background: #0d1119; padding: 2.5rem; position: relative;
+      overflow: hidden; transition: background 0.3s; cursor: default;
+    }
+    .service-card:hover { background: #111722; }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-card.gold::before { background: linear-gradient(90deg, transparent, #c8a96e, transparent); }
+    .service-card.blue::before { background: linear-gradient(90deg, transparent, #7eb8d4, transparent); }
+    .service-icon { font-size: 18px; margin-bottom: 1rem; }
+    .service-icon.gold { color: #c8a96e; }
+    .service-icon.blue { color: #7eb8d4; }
+    .service-h3 { font-size: 22px; font-weight: 500; margin-bottom: 0.8rem; letter-spacing: 0.02em; color: #f0ece4; }
+    .service-p { color: rgba(240,236,228,0.5); line-height: 1.7; font-size: 14px; }
 
-        /* --- DASHBOARD MONITORS --- */
-        .dashboard-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 40px; margin-bottom: 100px;
-        }
-        .monitor-frame {
-            background: #000; padding: 10px; border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            transition: 0.4s;
-        }
-        .monitor-frame:hover { border-color: var(--accent-purple); transform: scale(1.02); }
-        .monitor-screen {
-            width: 100%; height: 350px; overflow: hidden;
-            border: 1px solid rgba(0, 240, 255, 0.2); position: relative;
-        }
-        .monitor-screen img {
-            width: 100%; height: 100%; object-fit: cover; object-position: top;
-            transition: transform 0.5s; filter: brightness(0.9);
-        }
-        .monitor-frame:hover img { transform: scale(1.05); filter: brightness(1); }
-        .monitor-caption { margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
+    /* ── HOW IT WORKS ── */
+    #how-it-works { background: #0a0e14; }
+    .steps-wrap { margin-top: 4rem; position: relative; max-width: 900px; margin-left: auto; margin-right: auto; }
+    .steps-line {
+      position: absolute; left: 25px; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(200,169,110,0.3) 10%, rgba(200,169,110,0.3) 90%, transparent);
+    }
+    .step { display: flex; gap: 2.5rem; margin-bottom: 3.5rem; align-items: flex-start; }
+    .step:last-child { margin-bottom: 0; }
+    .step-num {
+      width: 50px; height: 50px; flex-shrink: 0;
+      border: 1px solid rgba(200,169,110,0.4);
+      display: flex; align-items: center; justify-content: center;
+      background: #0a0e14; position: relative; z-index: 1;
+    }
+    .step-num span { color: #c8a96e; font-size: 12px; letter-spacing: 0.1em; }
+    .step-body { padding-top: 10px; }
+    .step-h3 { font-size: 24px; font-weight: 500; margin-bottom: 0.5rem; color: #f0ece4; }
+    .step-p { color: rgba(240,236,228,0.55); line-height: 1.7; font-size: 15px; max-width: 600px; }
 
-        /* --- TERMINAL WINDOWS (New for Automations) --- */
-        .terminal-window {
-            background: var(--surface-terminal);
-            border-radius: 6px;
-            border: 1px solid #30363d;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            margin-bottom: 40px;
-            overflow: hidden;
-        }
-        .terminal-header {
-            background: #161b22;
-            padding: 10px 20px;
-            border-bottom: 1px solid #30363d;
-            display: flex; align-items: center;
-        }
-        .terminal-dots span {
-            display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px;
-        }
-        .terminal-body { position: relative; }
-        .terminal-body img {
-            width: 100%; display: block; opacity: 0.9;
-        }
-        .code-overlay {
-            padding: 20px; font-family: var(--font-code); font-size: 0.9rem; color: var(--accent-orange);
-            background: rgba(0,0,0,0.8); border-top: 1px solid #30363d;
-        }
+    /* ── GALLERY ── */
+    #gallery { background: #0d1119; }
+    .gallery-tabs { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 3rem; }
+    .gallery-tab {
+      padding: 8px 22px; border-radius: 2px; cursor: pointer;
+      font-family: inherit; font-size: 14px; letter-spacing: 0.06em;
+      transition: all 0.2s; border: 1px solid rgba(240,236,228,0.15);
+      background: transparent; color: rgba(240,236,228,0.55);
+    }
+    .gallery-tab.active {
+      border-color: #c8a96e; background: rgba(200,169,110,0.08); color: #c8a96e;
+    }
+    .gallery-frame {
+      margin-top: 2rem; border: 1px solid rgba(200,169,110,0.15);
+      border-radius: 4px; overflow: hidden; background: #111722; position: relative;
+    }
+    .gallery-dots { position: absolute; top: 12px; left: 16px; display: flex; gap: 6px; z-index: 2; }
+    .gallery-dot { width: 10px; height: 10px; border-radius: 50%; opacity: 0.7; }
+    .gallery-img {
+      width: 100%; display: block; max-height: 520px; object-fit: cover;
+      object-position: top; transition: opacity 0.3s;
+    }
+    .gallery-img-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2rem;
+    }
+    .gallery-img-grid-item { position: relative; overflow: hidden; cursor: pointer; }
+    .gallery-img-grid-item img {
+      width: 100%; height: 200px; object-fit: cover; object-position: top;
+      display: block; transition: transform 0.4s, opacity 0.3s; opacity: 0.7;
+    }
+    .gallery-img-grid-item:hover img { transform: scale(1.04); opacity: 1; }
+    .gallery-img-grid-item .grid-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(10,14,20,0.85));
+      color: #f0ece4; font-size: 13px; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 1.5rem 1rem 0.8rem;
+    }
+    .gallery-note { color: rgba(240,236,228,0.25); font-size: 12px; text-align: center; margin-top: 1rem; font-style: italic; }
 
-        /* --- ABOUT & LOGS --- */
-        .about-pilot {
-            background: linear-gradient(to right, rgba(10,10,20,0.9), rgba(20,10,30,0.8));
-            padding: 120px 0; border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        .tech-badge {
-            display: inline-block; padding: 5px 12px; margin: 5px 5px 5px 0;
-            border: 1px solid var(--accent-cyan); color: var(--accent-cyan);
-            font-family: var(--font-code); font-size: 0.8rem; text-transform: uppercase;
-        }
+    /* ── ABOUT ── */
+    #about { background: #0a0e14; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-p { color: rgba(240,236,228,0.6); line-height: 1.9; font-size: 15px; margin-top: 1rem; }
+    .about-badges { display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    .about-badge { border-left: 2px solid #c8a96e; padding-left: 1rem; }
+    .about-badge-name { color: #f0ece4; font-size: 18px; font-weight: 500; }
+    .about-badge-sub { color: rgba(240,236,228,0.4); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .about-quote {
+      border: 1px solid rgba(200,169,110,0.2); padding: 2.5rem;
+      background: #0d1119; position: relative;
+    }
+    .about-quote::before {
+      content: ''; position: absolute; top: -1px; left: 10%; right: 10%; height: 2px;
+      background: linear-gradient(90deg, transparent, #c8a96e, transparent);
+    }
+    .about-quote-mark { color: #c8a96e; font-size: 60px; line-height: 1; margin-bottom: 1rem; opacity: 0.5; }
+    .about-quote-text {
+      color: rgba(240,236,228,0.78); font-size: 20px; line-height: 1.6;
+      font-style: italic; margin-bottom: 1.5rem;
+    }
+    .about-quote-attr { color: rgba(240,236,228,0.35); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .about-deco {
+      position: absolute; bottom: -16px; right: -16px; width: 60px; height: 60px;
+      border: 1px solid rgba(200,169,110,0.15); pointer-events: none;
+    }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
-            .dashboard-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    /* ── CONTACT ── */
+    #contact { background: #0d1119; }
+    .contact-inner { max-width: 700px; margin: 0 auto; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .form-input, .form-textarea {
+      background: rgba(240,236,228,0.04); border: 1px solid rgba(200,169,110,0.2);
+      color: #f0ece4; padding: 14px 16px; border-radius: 2px; font-size: 14px;
+      font-family: inherit; outline: none; width: 100%; transition: border-color 0.2s;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(240,236,228,0.25); }
+    .form-input:focus, .form-textarea:focus { border-color: rgba(200,169,110,0.6); }
+    .form-textarea { resize: vertical; }
+    .form-submit {
+      margin-top: 1.5rem; background: #c8a96e; border: none; color: #0a0e14;
+      padding: 15px 40px; border-radius: 2px; cursor: pointer;
+      font-family: inherit; font-size: 15px; letter-spacing: 0.12em;
+      text-transform: uppercase; font-weight: 600; width: 100%; transition: background 0.2s;
+    }
+    .form-submit:hover { background: #e8c98e; }
+    .form-success {
+      margin-top: 3rem; text-align: center; padding: 3rem;
+      border: 1px solid rgba(200,169,110,0.3); background: rgba(200,169,110,0.05);
+      display: none;
+    }
+    .form-success.show { display: block; }
+    .form-success-icon { color: #c8a96e; font-size: 40px; margin-bottom: 1rem; }
+    .form-success-h3 { font-size: 24px; margin-bottom: 0.5rem; color: #f0ece4; }
+    .form-success-p { color: rgba(240,236,228,0.5); }
+    .form-body { margin-top: 3rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #070a0f; border-top: 1px solid rgba(200,169,110,0.1);
+      padding: 3rem 2.5rem;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-brand-name { font-size: 18px; font-weight: 500; color: #f0ece4; margin-bottom: 4px; }
+    .footer-brand-sub { color: rgba(240,236,228,0.3); font-size: 12px; letter-spacing: 0.06em; }
+    .footer-links { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+    .footer-links a {
+      color: rgba(240,236,228,0.35); text-decoration: none; font-size: 13px;
+      letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #c8a96e; }
+    .footer-copy { color: rgba(240,236,228,0.2); font-size: 12px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes gridDrift {
+      from { background-position: 0 0; }
+      to { background-position: 60px 60px; }
+    }
+    @keyframes compassSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-deco { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .form-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 2rem; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 5rem 1.2rem; }
+      .hero-h1 { font-size: 2.8rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <div class="container hero-content">
-            <div class="mono cyan" style="margin-bottom: 20px;">> SYSTEM READY // PILOT: ACTIVE</div>
-            <h1>Automated <span class="hero-title-gradient">Flight Deck</span><br>For Your Home.</h1>
-            <p class="mono" style="color: var(--success); margin: 20px 0;">
-                > INTEGRATING: AI COMPUTER VISION, OPENAI LLM, LICENSE PLATE RECOGNITION...
-            </p>
-            <div style="margin-top: 50px;">
-                <a href="#contact" class="btn">Initiate Protocol</a>
-            </div>
+<!-- ── NAVBAR ── -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-badge">EH</div>
+    <span class="nav-logo-name">Emena Home Tech</span>
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Request Quote</button>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-horizon"></div>
+  <div class="hero-altline" style="bottom:30%"></div>
+  <div class="hero-altline" style="bottom:45%"></div>
+  <div class="hero-altline" style="bottom:60%"></div>
+  <div class="hero-compass">✈</div>
+
+  <div class="hero-inner">
+    <div class="hero-tag">Smart Home Integration Specialists</div>
+    <h1 class="hero-h1">
+      Your Home.<br>
+      <em>Commanded</em> with<br>
+      Precision.
+    </h1>
+    <p class="hero-sub">
+      Professional smart home automation engineered with the discipline of aviation — every system integrated, every detail calibrated, every scenario prepared for.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services</button>
+      <button class="btn-secondary" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">How It Works</button>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">100+</div>
+        <div class="hero-stat-label">Projects Delivered</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">10+</div>
+        <div class="hero-stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">24/7</div>
+        <div class="hero-stat-label">Support Available</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">50+</div>
+        <div class="hero-stat-label">Brands Integrated</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Systems &amp; Services</div>
+      <h2 class="section-h2">Full-Spectrum Home Automation</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card gold">
+        <div class="service-icon gold">✦</div>
+        <h3 class="service-h3">Lighting Control</h3>
+        <p class="service-p">Precision-tuned ambient lighting systems with scene automation, circadian rhythm support, and motion-responsive zones throughout your home.</p>
+      </div>
+      <div class="service-card blue">
+        <div class="service-icon blue">✦</div>
+        <h3 class="service-h3">Security &amp; Surveillance</h3>
+        <p class="service-p">Military-grade access control, smart cameras, motion detection and real-time alerts — complete situational awareness of your property.</p>
+      </div>
+      <div class="service-card gold">
+        <div class="service-icon gold">✦</div>
+        <h3 class="service-h3">Climate Management</h3>
+        <p class="service-p">Intelligent HVAC integration that learns your preferences, optimises energy consumption, and delivers perfect cabin comfort year-round.</p>
+      </div>
+      <div class="service-card blue">
+        <div class="service-icon blue">✦</div>
+        <h3 class="service-h3">Shutter &amp; Blinds</h3>
+        <p class="service-p">Automated motorised shading that responds to sunlight, time of day, and your routines — protecting interiors while managing glare.</p>
+      </div>
+      <div class="service-card gold">
+        <div class="service-icon gold">✦</div>
+        <h3 class="service-h3">Energy Monitoring</h3>
+        <p class="service-p">Live dashboards tracking consumption across every circuit. Identify waste, reduce bills, and move toward a fully sustainable home.</p>
+      </div>
+      <div class="service-card blue">
+        <div class="service-icon blue">✦</div>
+        <h3 class="service-h3">Audio &amp; Entertainment</h3>
+        <p class="service-p">Whole-home multi-room audio, cinema integration, and one-touch scene activation for the ultimate in-home entertainment experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how-it-works">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Process</div>
+      <h2 class="section-h2">From Blueprint to Live System</h2>
+    </div>
+    <div class="steps-wrap">
+      <div class="steps-line"></div>
+      <div class="step">
+        <div class="step-num"><span>01</span></div>
+        <div class="step-body">
+          <h3 class="step-h3">Consultation</h3>
+          <p class="step-p">We assess your home layout, lifestyle, and goals to design a tailored automation blueprint.</p>
         </div>
-    </header>
-
-    <section id="visuals" style="padding: 100px 0;">
-        <div class="container">
-            <div class="section-header">
-                <span class="mono cyan">01 // VISUAL TELEMETRY</span>
-                <h2>Command Dashboards</h2>
-            </div>
-            
-            <div class="dashboard-grid">
-                <div class="monitor-frame">
-                    <div class="monitor-screen"><img src="dash-security.png" alt="NVR Dashboard"></div>
-                    <div class="monitor-caption">
-                        <h4 class="mono cyan">UNIFIED PERIMETER NVR</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Centralized camera feeds with Frigate object detection events.</p>
-                    </div>
-                </div>
-                <div class="monitor-frame">
-                    <div class="monitor-screen"><img src="dash-energy.png" alt="Energy Dashboard"></div>
-                    <div class="monitor-caption">
-                        <h4 class="mono cyan">POWERFLOW TELEMETRY</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Real-time solar generation, battery storage SoC, and grid dependence analysis.</p>
-                    </div>
-                </div>
-                <div class="monitor-frame">
-                    <div class="monitor-screen"><img src="dash-shutters.png" alt="Shutter Control"></div>
-                    <div class="monitor-caption">
-                        <h4 class="mono cyan">ENVIRONMENTAL ZONES</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Granular control over estate-wide shading and automation based on sun azimuth.</p>
-                    </div>
-                </div>
-                <div class="monitor-frame">
-                    <div class="monitor-screen"><img src="dash-scenes.png" alt="Scene Control"></div>
-                    <div class="monitor-caption">
-                        <h4 class="mono cyan">CONTEXTUAL ACTIVATION</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">One-touch deployment for complex lighting and gate control states.</p>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>02</span></div>
+        <div class="step-body">
+          <h3 class="step-h3">System Design</h3>
+          <p class="step-p">Our engineers draft a comprehensive integration plan, selecting hardware matched to your environment.</p>
         </div>
-    </section>
-
-    <section id="logic" style="padding: 100px 0; background: rgba(255,255,255,0.02);">
-        <div class="container">
-            <div class="section-header" style="border-color: var(--accent-orange);">
-                <span class="mono orange">02 // BACKEND PROTOCOLS</span>
-                <h2>Algorithmic Logic</h2>
-            </div>
-
-            <div class="terminal-window">
-                <div class="terminal-header">
-                    <div class="terminal-dots">
-                        <span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span>
-                    </div>
-                    <div class="mono" style="margin-left: 15px; color: #8b949e; font-size: 0.8rem;">root@emena-server:~/automations/ai_vision</div>
-                </div>
-                <div class="terminal-body">
-                    <img src="auto-logic-1.png" alt="Automation List 1">
-                    <div class="code-overlay">
-                        > DETECTED LOGIC NODES:<br>
-                        [+] LICENSE PLATE RECOGNITION (ANPR) :: ACTIVE<br>
-                        [+] LLM EVENT SUMMARY (OPENAI) :: INTEGRATED<br>
-                        [+] ABFALL REMINDER (AI VISION) :: SCHEDULED
-                    </div>
-                </div>
-            </div>
-
-            <div class="terminal-window">
-                <div class="terminal-header">
-                    <div class="terminal-dots">
-                        <span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span>
-                    </div>
-                    <div class="mono" style="margin-left: 15px; color: #8b949e; font-size: 0.8rem;">root@emena-server:~/automations/security</div>
-                </div>
-                <div class="terminal-body">
-                    <img src="auto-logic-2.png" alt="Automation List 2">
-                    <div class="code-overlay">
-                        > DETECTED LOGIC NODES:<br>
-                        [+] PERSON DETECTION (ANTHROPIC CLAUDE ANALYSIS) :: ACTIVE<br>
-                        [+] PERIMETER LIGHTING FLOW :: CONDITIONAL<br>
-                        [+] SHUTTER PRESETS (ASTRONOMICAL CLOCK) :: SYNCED
-                    </div>
-                </div>
-            </div>
-
+      </div>
+      <div class="step">
+        <div class="step-num"><span>03</span></div>
+        <div class="step-body">
+          <h3 class="step-h3">Installation</h3>
+          <p class="step-p">Discreet, professional installation with minimal disruption. Every cable routed, every device calibrated.</p>
         </div>
-    </section>
-
-    <section class="about-pilot">
-        <div class="container">
-            <div style="max-width: 800px;">
-                 <div class="section-header" style="border-color: var(--accent-purple);">
-                    <span class="mono purple">03 // OPERATOR LOG</span>
-                    <h2>Aviation-Grade Reliability</h2>
-                </div>
-                <p style="font-size: 1.2rem; color: var(--text-main); margin-bottom: 30px;">
-                    In aviation and critical IT infrastructure, redundancy is not optional—it is a requirement. 
-                    Founded by an active Pilot and IT Administrator, Emena Home Tech applies these same rigorous principles to home automation.
-                </p>
-                <div>
-                    <span class="tech-badge">GENERATIVE AI</span>
-                    <span class="tech-badge">COMPUTER VISION</span>
-                    <span class="tech-badge">ESP32 HARDWARE</span>
-                    <span class="tech-badge">PYTHON / C++</span>
-                </div>
-            </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>04</span></div>
+        <div class="step-body">
+          <h3 class="step-h3">Handover &amp; Support</h3>
+          <p class="step-p">Full walkthrough of your system, custom app setup, and dedicated ongoing support from our team.</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="contact" style="text-align: center; padding: 150px 0;">
-        <div class="container">
-            <h2 style="font-size: 3rem; margin-bottom: 20px;">Ready to Deploy?</h2>
-            <a href="mailto:contact@emenahometech.online" class="btn">Establish Comms</a>
+<!-- ── GALLERY ── -->
+<section id="gallery">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Interface Gallery</div>
+      <h2 class="section-h2">Your Command Centre</h2>
+    </div>
+
+    <!-- Main featured image viewer -->
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" onclick="setTab(this,'dash-scenes.png','Scenes &amp; Mood')">Scenes &amp; Mood</button>
+      <button class="gallery-tab" onclick="setTab(this,'dash-energy.png','Energy Dashboard')">Energy Dashboard</button>
+      <button class="gallery-tab" onclick="setTab(this,'dash-security.png','Security Overview')">Security Overview</button>
+      <button class="gallery-tab" onclick="setTab(this,'dash-shutters.png','Shutter Control')">Shutter Control</button>
+    </div>
+    <div class="gallery-frame">
+      <div class="gallery-dots">
+        <div class="gallery-dot" style="background:#ff5f57"></div>
+        <div class="gallery-dot" style="background:#ffbd2e"></div>
+        <div class="gallery-dot" style="background:#28ca41"></div>
+      </div>
+      <img id="gallery-main-img" class="gallery-img" src="dash-scenes.png" alt="Scenes & Mood dashboard" style="padding-top:32px;" />
+    </div>
+
+    <!-- Automation logic screenshots grid -->
+    <div class="gallery-img-grid" style="margin-top:2rem">
+      <div class="gallery-img-grid-item">
+        <img src="auto-logic-1.png" alt="Automation Logic 1" />
+        <div class="grid-label">Automation Logic — Scene 1</div>
+      </div>
+      <div class="gallery-img-grid-item">
+        <img src="auto-logic-2.png" alt="Automation Logic 2" />
+        <div class="grid-label">Automation Logic — Scene 2</div>
+      </div>
+    </div>
+
+    <p class="gallery-note">Real screenshots from installed Emena Home Tech systems</p>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-header left">
+          <div class="section-tag" style="justify-content:flex-start">About Us</div>
+          <h2 class="section-h2">Engineered by a Pilot.<br>Built for Precision.</h2>
         </div>
-    </section>
+        <p class="about-p" style="margin-top:2rem">
+          Emena Home Tech was founded by a commercial pilot who understands that reliable systems aren't a luxury — they're a requirement. Every smart home project we deliver is engineered with the same rigour applied to aircraft systems: redundant pathways, failsafe logic, and zero tolerance for incomplete integration.
+        </p>
+        <p class="about-p">
+          We bring aviation-grade discipline to domestic automation, ensuring your lighting, security, climate, and entertainment systems work in perfect harmony — every time, without exception.
+        </p>
+        <div class="about-badges">
+          <div class="about-badge">
+            <div class="about-badge-name">KNX</div>
+            <div class="about-badge-sub">Certified</div>
+          </div>
+          <div class="about-badge">
+            <div class="about-badge-name">Loxone</div>
+            <div class="about-badge-sub">Partner</div>
+          </div>
+          <div class="about-badge">
+            <div class="about-badge-name">CEDIA</div>
+            <div class="about-badge-sub">Member</div>
+          </div>
+        </div>
+      </div>
+      <div style="position:relative">
+        <div class="about-quote">
+          <div class="about-quote-mark">"</div>
+          <p class="about-quote-text">
+            In aviation, a system either works or it doesn't. There is no acceptable middle ground. That's exactly how we design smart homes.
+          </p>
+          <div class="about-quote-attr">— Founder, Emena Home Tech</div>
+        </div>
+        <div class="about-deco"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer style="padding: 50px; text-align: center; background: #010103; border-top: 1px solid #222;">
-        <p class="mono" style="font-size: 0.8rem; color: #555;">© 2026 EMENA HOME TECH // ALL SYSTEMS NOMINAL</p>
-    </footer>
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-header">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-h2">Request a Consultation</h2>
+    </div>
+    <div class="form-body" id="form-body">
+      <div class="form-grid">
+        <input class="form-input" type="text" placeholder="Full Name" id="f-name" />
+        <input class="form-input" type="email" placeholder="Email Address" id="f-email" />
+        <input class="form-input" type="tel" placeholder="Phone Number" id="f-phone" />
+        <input class="form-input" type="text" placeholder="Service of Interest" id="f-service" />
+      </div>
+      <textarea class="form-input form-textarea" rows="5" placeholder="Tell us about your home and automation goals..." id="f-message"></textarea>
+      <button class="form-submit" onclick="submitForm()">Send Request</button>
+    </div>
+    <div class="form-success" id="form-success">
+      <div class="form-success-icon">✓</div>
+      <h3 class="form-success-h3">Message Received</h3>
+      <p class="form-success-p">We'll be in touch within 24 hours to schedule your consultation.</p>
+    </div>
+  </div>
+</section>
 
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Emena Home Tech</div>
+      <div class="footer-brand-sub">Smart Home Integration · Est. 2020</div>
+    </div>
+    <nav class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="footer-copy">© 2025 Emena Home Tech</div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  window.addEventListener('scroll', function() {
+    document.getElementById('navbar').classList.toggle('solid', window.scrollY > 60);
+  });
+
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+  function closeMobile() {
+    document.getElementById('mobile-menu').classList.remove('open');
+  }
+
+  // Gallery tabs
+  function setTab(btn, imgFile, label) {
+    document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    var img = document.getElementById('gallery-main-img');
+    img.style.opacity = '0';
+    setTimeout(function() {
+      img.src = imgFile;
+      img.alt = label;
+      img.style.opacity = '1';
+    }, 200);
+  }
+
+  // Contact form
+  async function submitForm() {
+    var name = document.getElementById('f-name').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var phone = document.getElementById('f-phone').value.trim();
+    var service = document.getElementById('f-service').value.trim();
+    var message = document.getElementById('f-message').value.trim();
+
+    if (!name || !email) {
+      alert('Please fill in at least your name and email.');
+      return;
+    }
+
+    var btn = document.querySelector('.form-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      var response = await fetch('https://formspree.io/f/mjgjggrl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, phone: phone, service: service, message: message })
+      });
+
+      if (response.ok) {
+        document.getElementById('form-body').style.display = 'none';
+        document.getElementById('form-success').classList.add('show');
+      } else {
+        alert('Something went wrong. Please try again or email us directly.');
+        btn.textContent = 'Send Request';
+        btn.disabled = false;
+      }
+    } catch(err) {
+      alert('Connection error. Please check your internet and try again.');
+      btn.textContent = 'Send Request';
+      btn.disabled = false;
+    }
+  }
+</script>
 </body>
 </html>
