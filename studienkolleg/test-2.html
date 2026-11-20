@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Übungstest Deutsch 2 – Aufnahmeprüfung Studienkolleg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#1f2328; --muted:#5d636c; --line:#e2ddd2;
+  --accent:#1d4e89; --accent-soft:#e8eef7;
+  --ok:#1a7f37; --okbg:#e6f4ea; --bad:#b42318; --badbg:#fdecea;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#15171b; --card:#1e2127; --ink:#e9e7e2; --muted:#a2a7af; --line:#33373e;
+    --accent:#86b4ee; --accent-soft:#223047;
+    --ok:#62c47a; --okbg:#1b3022; --bad:#ff8a80; --badbg:#3a1f1e;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:76px}
+body{margin:0; background:var(--bg); color:var(--ink); font:17px/1.6 "Source Sans 3",system-ui,sans-serif}
+header.top{position:sticky; top:0; z-index:10; background:var(--card); border-bottom:1px solid var(--line)}
+.top-inner{max-width:880px; margin:0 auto; padding:10px 18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.brand{font-weight:700; font-size:16px; margin-right:auto}
+nav a{color:var(--muted); text-decoration:none; font-size:15px; margin-right:12px; font-weight:600}
+nav a:hover{color:var(--accent)}
+.timer{display:flex; align-items:center; gap:8px; font-variant-numeric:tabular-nums}
+.timer .clock{font-weight:700; font-size:18px; min-width:58px; text-align:right}
+.timer .clock.low{color:var(--bad)}
+button{font:inherit; font-weight:600; font-size:15px; border-radius:8px; border:1px solid var(--accent); background:var(--accent); color:#fff; padding:7px 14px; cursor:pointer}
+@media (prefers-color-scheme: dark){ button{color:#10151c} }
+button.ghost{background:transparent; color:var(--accent)}
+button:hover{filter:brightness(1.08)}
+main{max-width:880px; margin:0 auto; padding:24px 18px 80px}
+h1{font-family:"Source Serif 4",Georgia,serif; font-size:32px; line-height:1.2; margin:8px 0 6px}
+h2{font-family:"Source Serif 4",Georgia,serif; font-size:25px; margin:0 0 4px}
+h3{font-size:18px; margin:22px 0 6px}
+.lead{color:var(--muted); margin:0 0 18px}
+section.card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px 24px 20px; margin:22px 0}
+.meta{color:var(--muted); font-size:15px; margin-bottom:14px}
+.note{background:var(--accent-soft); border-radius:10px; padding:12px 16px; font-size:15.5px; margin:14px 0}
+.note ul{margin:6px 0 0; padding-left:20px}
+.ctext{font-family:"Source Serif 4",Georgia,serif; font-size:18px; line-height:2.15; margin:0 0 6px}
+.gap{white-space:nowrap}
+.gap input{font:inherit; font-size:17px; border:none; border-bottom:2px solid var(--muted); background:transparent; color:var(--ink); padding:0 2px; outline:none; border-radius:0}
+.gap input:focus{border-bottom-color:var(--accent); background:var(--accent-soft)}
+.gap input.ok{border-bottom-color:var(--ok); background:var(--okbg); color:var(--ok)}
+.gap input.bad{border-bottom-color:var(--bad); background:var(--badbg); color:var(--bad)}
+.sol{font-family:"Source Sans 3",sans-serif; font-size:13px; font-weight:700; color:var(--ok); vertical-align:super; margin-left:1px}
+.q{padding:14px 0; border-top:1px solid var(--line)}
+.q:first-of-type{border-top:none}
+.qt{margin-bottom:8px}
+.blank{letter-spacing:1px; color:var(--muted)}
+.opts{display:flex; flex-direction:column; gap:4px}
+.opts.row{flex-direction:row; flex-wrap:wrap; gap:8px}
+.opt{display:flex; align-items:flex-start; gap:8px; padding:6px 10px; border-radius:8px; border:1px solid transparent; cursor:pointer}
+.opt:hover{background:var(--accent-soft)}
+.opt input{margin-top:6px; accent-color:var(--accent)}
+.opt.ok{background:var(--okbg); border-color:var(--ok)}
+.opt.bad{background:var(--badbg); border-color:var(--bad)}
+.expl{font-size:15px; color:var(--muted); margin-top:6px; padding-left:10px; border-left:3px solid var(--line)}
+.reading{font-family:"Source Serif 4",Georgia,serif; font-size:17.5px; line-height:1.75; border:1px solid var(--line); border-radius:10px; padding:18px 22px; margin:8px 0 18px}
+.reading h3{font-family:"Source Serif 4",Georgia,serif; margin-top:0; font-size:21px}
+.reading p{margin:0 0 12px}
+.reading .pn{font-family:"Source Sans 3",sans-serif; font-size:13px; color:var(--muted); font-weight:700; margin-right:6px}
+textarea{width:100%; min-height:200px; font:inherit; color:var(--ink); background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; resize:vertical}
+textarea:focus{outline:2px solid var(--accent); border-color:transparent}
+.actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px}
+.score{font-weight:700; font-size:17px}
+.score.good{color:var(--ok)} .score.mid{color:#b26a00} .score.low{color:var(--bad)}
+@media (prefers-color-scheme: dark){ .score.mid{color:#f0b35a} }
+.model{background:var(--okbg); border-radius:10px; padding:14px 18px; margin-top:14px; font-family:"Source Serif 4",Georgia,serif}
+.check li{margin:3px 0}
+table.res{width:100%; border-collapse:collapse; margin:10px 0}
+table.res td{padding:9px 6px; border-bottom:1px solid var(--line)}
+table.res td.n{text-align:right; font-variant-numeric:tabular-nums; font-weight:700}
+.bar{height:10px; background:var(--line); border-radius:6px; overflow:hidden; margin-top:4px}
+.bar span{display:block; height:100%; background:var(--accent); width:0; transition:width .4s}
+.banner{display:none; background:var(--badbg); color:var(--bad); font-weight:700; text-align:center; padding:8px}
+.banner.show{display:block}
+@media (max-width:600px){
+  nav{display:none}
+  section.card{padding:18px 16px}
+  h1{font-size:26px}
+  .ctext{font-size:17px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Übungstest Deutsch 2</div>
+    <nav>
+      <a href="#teil-1">C-Test</a><a href="#teil-2">Grammatik</a><a href="#teil-3">Lesen</a><a href="#teil-4">Schreiben</a><a href="#ergebnis">Ergebnis</a>
+    </nav>
+    <div class="timer"><span class="clock" id="clock">60:00</span><button id="timerBtn" type="button">Zeit starten</button></div>
+  </div>
+  <div class="banner" id="banner">Die Zeit ist um! Du kannst trotzdem weitermachen und auswerten.</div>
+</header>
+
+<main>
+  <h1>Aufnahmeprüfung Deutsch – Übungstest 2</h1>
+  <p class="lead">Für die Vorbereitung auf das Studienkolleg (z.&nbsp;B. Mettingen) · Niveau B1+/B2 · ca. 60 Minuten · <a href="test-1.html" style="color:var(--accent)">zu Übungstest 1</a> · <a href="./" style="color:var(--accent)">Übersicht</a></p>
+
+  <div class="note">
+    <strong>Hinweis:</strong> Das ist kein offizieller Test des Studienkollegs. Er folgt dem Format, das die meisten Studienkollegs benutzen.
+    <ul>
+      <li><b>Teil 1 – C-Test</b> (25 Min.): 4 Texte, 80 Lücken</li>
+      <li><b>Teil 2 – Grammatik &amp; Satzbau</b> (15 Min.): 20 Aufgaben</li>
+      <li><b>Teil 3 – Leseverstehen</b> (20 Min.): 1 Text, 9 Aufgaben</li>
+      <li><b>Teil 4 – Schreiben</b> (zusätzlich, ca. 10–15 Min.): kurzer Text mit Musterlösung</li>
+    </ul>
+    Starte oben die Uhr, damit du unter echtem Zeitdruck übst.
+  </div>
+
+  <!-- TEIL 1 -->
+  <section class="card" id="teil-1">
+    <h2>Teil 1: C-Test</h2>
+    <div class="meta">Empfohlene Zeit: 25 Minuten · 80 Punkte</div>
+    <div class="note">
+      <strong>Aufgabe:</strong> Ergänzen Sie die fehlenden Worthälften. Ab dem zweiten Satz fehlt bei jedem zweiten Wort die zweite Hälfte. Bei Wörtern mit ungerader Buchstabenzahl fehlt die größere Hälfte (z.&nbsp;B. <i>d<u>er</u></i>, <i>Stu<u>nden</u></i>). Der erste und der letzte Satz sind vollständig.<br>
+      <strong>Achtung:</strong> Auch Rechtschreibfehler (ä/ö/ü, ß, Groß-/Kleinschreibung) zählen als Fehler.
+    </div>
+    <div id="ctests"></div>
+    <div class="actions">
+      <button type="button" onclick="evalC()">Teil 1 auswerten</button>
+      <span class="score" id="scoreC"></span>
+    </div>
+  </section>
+
+  <!-- TEIL 2 -->
+  <section class="card" id="teil-2">
+    <h2>Teil 2: Grammatik &amp; Satzbau</h2>
+    <div class="meta">Empfohlene Zeit: 15 Minuten · 20 Punkte</div>
+    <div class="note"><strong>Aufgabe:</strong> Wählen Sie jeweils die richtige Lösung (A, B, C oder D). Bei den Satzbau-Aufgaben ist nur <u>ein</u> Satz grammatisch richtig.</div>
+    <div id="gram"></div>
+    <div class="actions">
+      <button type="button" onclick="evalG()">Teil 2 auswerten</button>
+      <span class="score" id="scoreG"></span>
+    </div>
+  </section>
+
+  <!-- TEIL 3 -->
+  <section class="card" id="teil-3">
+    <h2>Teil 3: Leseverstehen</h2>
+    <div class="meta">Empfohlene Zeit: 20 Minuten · 9 Punkte</div>
+    <div class="note"><strong>Aufgabe:</strong> Lesen Sie den Text. Lösen Sie dann die Aufgaben 1–9.</div>
+    <div class="reading">
+      <h3>Mit zwei Sprachen aufwachsen</h3>
+      <p><span class="pn">[1]</span>Weltweit wächst mehr als die Hälfte aller Kinder mit zwei oder mehr Sprachen auf. Auch in Deutschland sprechen viele Familien zu Hause eine andere Sprache als in der Schule. Lange Zeit glaubten Experten, dass das für Kinder eine Belastung sei. Man befürchtete, dass sie am Ende keine der beiden Sprachen richtig lernen würden.</p>
+      <p><span class="pn">[2]</span>Heute weiß man, dass diese Sorge unbegründet ist. Zwar mischen zweisprachige Kinder am Anfang manchmal Wörter aus beiden Sprachen. Das ist aber kein Zeichen von Verwirrung, sondern ganz normal. Meistens können sie die Sprachen spätestens im Schulalter gut voneinander trennen. Auch ihr Wortschatz ist insgesamt nicht kleiner als der von einsprachigen Kindern – er ist nur auf zwei Sprachen verteilt.</p>
+      <p><span class="pn">[3]</span>Mehrsprachigkeit kann sogar Vorteile haben. Studien deuten darauf hin, dass sich zweisprachige Menschen oft besser auf eine Aufgabe konzentrieren und schneller zwischen verschiedenen Tätigkeiten wechseln können. Außerdem fällt es ihnen später häufig leichter, eine dritte Sprache zu lernen.</p>
+      <p><span class="pn">[4]</span>Damit ein Kind beide Sprachen gut lernt, braucht es allerdings genug Kontakt zu jeder Sprache. Fachleute empfehlen Eltern, mit ihrem Kind die Sprache zu sprechen, die sie selbst am besten beherrschen. Wer seine Muttersprache aufgibt, um mit dem Kind fehlerhaftes Deutsch zu sprechen, hilft ihm damit nicht.</p>
+      <p><span class="pn">[5]</span>Wichtig ist auch, dass die Herkunftssprache anerkannt wird. Kinder, die sich für ihre Familiensprache schämen, verlieren oft das Interesse daran. Einige Schulen bieten deshalb inzwischen Unterricht in Sprachen wie Arabisch, Türkisch oder Russisch an.</p>
+    </div>
+    <h3>Aufgaben 1–6: Richtig, falsch oder nicht im Text?</h3>
+    <div id="lesenA"></div>
+    <h3>Aufgaben 7–9: Wählen Sie die richtige Antwort.</h3>
+    <div id="lesenB"></div>
+    <div class="actions">
+      <button type="button" onclick="evalL()">Teil 3 auswerten</button>
+      <span class="score" id="scoreL"></span>
+    </div>
+  </section>
+
+  <!-- TEIL 4 -->
+  <section class="card" id="teil-4">
+    <h2>Teil 4: Schreiben (zusätzlich)</h2>
+    <div class="meta">Empfohlene Zeit: 10–15 Minuten · wird nicht automatisch bewertet</div>
+    <div class="note">
+      <strong>Aufgabe:</strong> Einige Eltern fordern: <i>„Alle Schulen sollen Unterricht in den Herkunftssprachen der Kinder anbieten.“</i><br>
+      Was ist Ihre Meinung? Schreiben Sie einen Text von <b>ca. 80–100 Wörtern</b>. Nennen Sie mindestens zwei Argumente und ein Gegenargument.
+    </div>
+    <textarea id="essay" placeholder="Schreiben Sie hier Ihren Text …" spellcheck="false"></textarea>
+    <div class="actions">
+      <span class="meta" id="wc" style="margin:0">0 Wörter</span>
+      <button type="button" class="ghost" onclick="toggleModel()">Musterlösung &amp; Checkliste zeigen</button>
+    </div>
+    <div id="model" hidden>
+      <h3>Checkliste – hast du an alles gedacht?</h3>
+      <ul class="check">
+        <li>Ist deine Meinung am Anfang klar? (<i>Meiner Meinung nach …, Ich bin der Ansicht, dass …</i>)</li>
+        <li>Hast du mindestens zwei Argumente mit Begründung?</li>
+        <li>Hast du ein Gegenargument genannt? (<i>Andererseits …, Allerdings muss man bedenken, dass …</i>)</li>
+        <li>Benutzt du Konnektoren? (<i>erstens, außerdem, deshalb, obwohl, trotzdem</i>)</li>
+        <li>Hast du einen Schluss? (<i>Insgesamt …, Zusammenfassend …</i>)</li>
+        <li>Steht das Verb im Hauptsatz an Position 2 und im Nebensatz am Ende?</li>
+      </ul>
+      <h3>Musterlösung (ca. 95 Wörter)</h3>
+      <div class="model">Ich bin der Meinung, dass Schulen Unterricht in den Herkunftssprachen anbieten sollten. Erstens zeigt die Schule damit, dass die Familiensprache der Kinder wertvoll ist. Dadurch schämen sich die Kinder nicht und verlieren ihre Muttersprache nicht. Zweitens ist Mehrsprachigkeit später im Beruf ein großer Vorteil. Andererseits kostet ein solcher Unterricht viel Geld, und es ist schwierig, genug qualifizierte Lehrkräfte zu finden. Deshalb könnte man den Unterricht zunächst nur für die häufigsten Sprachen anbieten. Insgesamt überwiegen für mich aber die Vorteile, denn Sprachen sind ein Schatz für die ganze Gesellschaft.</div>
+    </div>
+  </section>
+
+  <!-- ERGEBNIS -->
+  <section class="card" id="ergebnis">
+    <h2>Ergebnis</h2>
+    <div class="meta">Werte alle Teile auf einmal aus oder fange von vorne an.</div>
+    <div class="actions" style="margin-top:0">
+      <button type="button" onclick="evalAll()">Alles auswerten</button>
+      <button type="button" class="ghost" onclick="resetAll()">Test zurücksetzen</button>
+    </div>
+    <table class="res" id="resTable">
+      <tr><td>Teil 1: C-Test</td><td class="n" id="rC">– / 80</td></tr>
+      <tr><td>Teil 2: Grammatik &amp; Satzbau</td><td class="n" id="rG">– / 20</td></tr>
+      <tr><td>Teil 3: Leseverstehen</td><td class="n" id="rL">– / 9</td></tr>
+      <tr><td><b>Gesamt</b></td><td class="n" id="rT">– / 109</td></tr>
+    </table>
+    <div class="bar"><span id="barFill"></span></div>
+    <p id="feedback" class="meta" style="margin-top:12px"></p>
+    <h3>Verlauf – deine bisherigen Versuche</h3>
+    <div class="meta" style="margin-bottom:6px">Deine Antworten werden automatisch gespeichert (nur in diesem Browser auf diesem Gerät). Jeder ausgewertete Versuch erscheint hier.</div>
+    <table class="res" id="histTable"></table>
+  </section>
+</main>
+
+<script>
+/* ---------------- DATA ---------------- */
+const CTEXTS = [
+  { title:"Text 1: Arbeiten im Homeoffice",
+    intro:"Seit einigen Jahren arbeiten viele Angestellte regelmäßig von zu Hause aus.",
+    body:"Für die Beschäftigten hat das viele Vorteile, denn sie sparen den Weg zur Arbeit und können ihre Zeit flexibler einteilen. Besonders Eltern mit kleinen Kindern schätzen diese Freiheit sehr. Allerdings gibt es auch Nachteile. Manche Menschen fühlen sich zu Hause einsam, weil der direkte Kontakt zu den Kollegen fehlt. Andere haben Probleme, Arbeit und Freizeit klar voneinander zu trennen.",
+    outro:"Viele Firmen setzen deshalb inzwischen auf ein Modell, bei dem man einige Tage im Büro und einige Tage zu Hause arbeitet." },
+  { title:"Text 2: Wasser aus der Leitung",
+    intro:"Wasser ist das wichtigste Lebensmittel des Menschen.",
+    body:"Ein Erwachsener sollte jeden Tag ungefähr zwei Liter trinken, bei großer Hitze oder beim Sport sogar mehr. In Deutschland kann man das Wasser aus der Leitung fast überall ohne Bedenken trinken. Es wird streng kontrolliert und ist oft genauso gut wie Wasser aus der Flasche. Trotzdem kaufen viele Menschen lieber Mineralwasser im Supermarkt. Das ist nicht nur teurer, sondern belastet auch die Umwelt, weil die Flaschen produziert und transportiert werden müssen.",
+    outro:"Wer Leitungswasser trinkt, spart also Geld und schützt gleichzeitig das Klima." },
+  { title:"Text 3: Das Ehrenamt",
+    intro:"In Deutschland engagieren sich Millionen Menschen ehrenamtlich.",
+    body:"Sie arbeiten ohne Bezahlung in Sportvereinen, bei der Feuerwehr oder in sozialen Einrichtungen. Viele helfen zum Beispiel älteren Menschen beim Einkaufen oder geben Kindern Nachhilfe. Ohne diese freiwilligen Helfer könnten viele Angebote gar nicht existieren. Die Gründe für ein Ehrenamt sind sehr unterschiedlich. Manche wollen anderen Menschen helfen, andere suchen neue Kontakte oder möchten ihre Freizeit sinnvoll gestalten.",
+    outro:"Für internationale Studierende kann ein Ehrenamt außerdem eine gute Möglichkeit sein, die Sprache im Alltag zu üben." },
+  { title:"Text 4: Alte Handys",
+    intro:"In vielen Schubladen liegen alte Handys, die niemand mehr benutzt.",
+    body:"Dabei enthalten die Geräte wertvolle Rohstoffe wie Gold, Silber und Kupfer. Wenn man diese Materialien wiederverwertet, muss man weniger neue Rohstoffe aus der Erde holen. Der Abbau dieser Metalle verursacht nämlich große Umweltschäden und findet oft unter schlechten Arbeitsbedingungen statt. Alte Handys sollte man deshalb nicht in den normalen Hausmüll werfen. Viele Geschäfte und Wertstoffhöfe nehmen sie kostenlos zurück.",
+    outro:"Vorher sollte man allerdings alle persönlichen Daten auf dem Gerät löschen." }
+];
+
+const GRAM = [
+  {q:"Ich habe keine Ahnung, ___ er so spät nach Hause gekommen ist.", o:["warum","dass","ob","wenn"], a:0, e:"Indirekte W-Frage („Warum ist er so spät gekommen?“) → das Fragewort bleibt: <b>warum</b>."},
+  {q:"___ ich nach Hause kam, war meine Mutter schon schlafen gegangen.", o:["Wenn","Als","Nachdem","Seit"], a:1, e:"Einmaliges Ereignis in der Vergangenheit → <b>als</b>. (<i>Nachdem</i> bräuchte im Nebensatz Plusquamperfekt: „Nachdem ich gekommen war …“)"},
+  {q:"Das ist das Buch, ___ ich dir empfohlen habe.", o:["der","dem","das","dessen"], a:2, e:"<i>etwas</i> empfehlen → Akkusativ, das Buch (neutral) → <b>das</b>."},
+  {q:"Die Freunde, mit ___ ich in den Urlaub fahre, kommen aus Spanien.", o:["die","denen","deren","den"], a:1, e:"<i>mit</i> + Dativ, Plural → <b>denen</b>."},
+  {q:"Der Brief ___ gestern abgeschickt.", o:["wird","wurde","hat","hatte"], a:1, e:"Passiv Präteritum: <i>wurde</i> + Partizip II. „gestern“ = Vergangenheit → <b>wurde</b> abgeschickt."},
+  {q:"Während ___ Unterrichts darf man das Handy nicht benutzen.", o:["dem","der","des","den"], a:2, e:"<i>während</i> + Genitiv → <b>des</b> Unterrichts."},
+  {q:"Sie lernt Deutsch, ___ sie in Deutschland studieren möchte.", o:["denn","weil","deshalb","obwohl"], a:1, e:"Grund + Verb am Ende → <b>weil</b>. (<i>obwohl</i> hat auch das Verb am Ende, aber die falsche Bedeutung.)"},
+  {q:"Wenn ich du ___, würde ich früher mit dem Lernen anfangen.", o:["bin","war","wäre","sei"], a:2, e:"Irreale Situation → Konjunktiv II von <i>sein</i> → <b>wäre</b>."},
+  {q:"Ich warte schon seit einer Stunde ___ den Bus.", o:["für","an","auf","nach"], a:2, e:"warten <b>auf</b> + Akkusativ."},
+  {q:"Er hat sich ___ den Lärm der Nachbarn beschwert.", o:["über","auf","an","von"], a:0, e:"sich beschweren <b>über</b> + Akkusativ."},
+  {q:"Welcher Satz ist richtig?", o:["Morgen ich muss früh aufstehen.","Morgen muss ich früh aufstehen.","Morgen muss früh ich aufstehen.","Ich morgen muss früh aufstehen."], a:1, e:"Modalverb auf Position 2, Infinitiv am Ende. Nach „Morgen“ folgt sofort das Verb."},
+  {q:"Welcher Satz ist richtig?", o:["Sie hat gesagt, dass sie heute keine Zeit hat.","Sie hat gesagt, dass sie hat heute keine Zeit.","Sie hat gesagt, dass hat sie heute keine Zeit.","Sie hat gesagt, dass keine Zeit sie heute hat."], a:0, e:"Nebensatz mit <i>dass</i>: Subjekt direkt nach <i>dass</i>, konjugiertes Verb am Ende."},
+  {q:"Welcher Satz ist richtig?", o:["Obwohl er war krank, ging er zur Arbeit.","Obwohl er krank war, er ging zur Arbeit.","Obwohl krank er war, ging er zur Arbeit.","Obwohl er krank war, ging er zur Arbeit."], a:3, e:"Nebensatz: Verb am Ende (<i>krank war</i>). Danach beginnt der Hauptsatz mit dem Verb (<i>ging er</i>)."},
+  {q:"Welcher Satz ist richtig?", o:["Ich möchte fahren im Sommer nach Italien.","Im Sommer ich möchte nach Italien fahren.","Ich möchte im Sommer nach Italien fahren.","Ich möchte im Sommer fahren nach Italien."], a:2, e:"Satzklammer: <i>möchte</i> auf Position 2, Infinitiv <i>fahren</i> ganz am Ende."},
+  {q:"Obwohl es stark regnete, fand das Spiel statt.<br>→ ___ des starken Regens fand das Spiel statt.", o:["Wegen","Trotz","Bei","Statt"], a:1, e:"Gegengrund (<i>obwohl</i>) → nominal mit <b>trotz</b> + Genitiv."},
+  {q:"Bevor man das Gerät benutzt, sollte man die Anleitung lesen.<br>→ ___ der Benutzung des Geräts sollte man die Anleitung lesen.", o:["Vor","Nach","Bei","Seit"], a:0, e:"<i>bevor</i> → nominal mit <b>vor</b> + Dativ."},
+  {q:"Nach dem Essen machen wir einen Spaziergang.<br>→ ___ wir gegessen haben, machen wir einen Spaziergang.", o:["Bevor","Während","Nachdem","Seitdem"], a:2, e:"<i>nach</i> + Nomen → verbal mit <b>nachdem</b>."},
+  {q:"Ich gehe früh ins Bett, ___ morgen fit zu sein.", o:["damit","um","dass","weil"], a:1, e:"Ziel mit Infinitiv + <i>zu</i> (gleiches Subjekt) → <b>um</b> … zu."},
+  {q:"Das Problem konnte leider nicht ___ werden.", o:["lösen","gelöst","zu lösen","löste"], a:1, e:"Passiv mit Modalverb: Partizip II + <i>werden</i> → <b>gelöst</b> werden."},
+  {q:"Er spricht so schnell, ___ ich ihn kaum verstehe.", o:["als","damit","dass","ob"], a:2, e:"Folge: so … <b>dass</b>."}
+];
+
+const RFN = ["richtig","falsch","nicht im Text"];
+const LESEN_A = [
+  {q:"Früher dachten Experten, dass es für Kinder schwierig ist, mit zwei Sprachen aufzuwachsen.", a:0, e:"Absatz 1: Experten glaubten, das sei „eine Belastung“ für Kinder."},
+  {q:"Wenn zweisprachige Kinder Wörter mischen, zeigt das, dass sie verwirrt sind.", a:1, e:"Absatz 2: Das ist „kein Zeichen von Verwirrung, sondern ganz normal“."},
+  {q:"Der Wortschatz zweisprachiger Kinder ist insgesamt kleiner als der von einsprachigen Kindern.", a:1, e:"Absatz 2: Der Wortschatz ist insgesamt <b>nicht kleiner</b>, er ist nur auf zwei Sprachen verteilt."},
+  {q:"Zweisprachige Menschen verdienen später im Beruf mehr Geld.", a:2, e:"Über Geld oder Gehalt sagt der Text nichts."},
+  {q:"Fachleute empfehlen Eltern, mit ihren Kindern immer Deutsch zu sprechen.", a:1, e:"Absatz 4: Eltern sollen die Sprache sprechen, die sie <b>selbst am besten</b> beherrschen."},
+  {q:"An manchen Schulen kann man Arabisch lernen.", a:0, e:"Absatz 5: Einige Schulen bieten Unterricht in Arabisch, Türkisch oder Russisch an."}
+];
+const LESEN_B = [
+  {q:"Was empfehlen Fachleute den Eltern?", o:["Nur Deutsch mit dem Kind zu sprechen.","Die Sprache zu sprechen, die sie selbst am besten können.","Beide Sprachen in jedem Satz zu mischen.","Das Kind früh in einen Sprachkurs zu schicken."], a:1, e:"Absatz 4: „… die Sprache zu sprechen, die sie selbst am besten beherrschen“."},
+  {q:"Welcher Vorteil der Mehrsprachigkeit wird im Text genannt?", o:["Bessere Noten in Mathematik","Mehr Freunde in der Schule","Früher sprechen lernen als andere Kinder","Später leichter eine dritte Sprache lernen"], a:3, e:"Absatz 3: Es fällt ihnen später häufig leichter, eine dritte Sprache zu lernen."},
+  {q:"Warum ist es wichtig, dass die Herkunftssprache anerkannt wird?", o:["Weil Kinder sonst das Interesse an ihrer Familiensprache verlieren können.","Weil Schulen sonst kein Geld bekommen.","Weil die Kinder sonst kein Deutsch lernen.","Weil die Eltern es gesetzlich verlangen können."], a:0, e:"Absatz 5: Kinder, die sich für ihre Familiensprache schämen, verlieren oft das Interesse daran."}
+];
+
+/* ---------------- C-TEST BUILDER ---------------- */
+const WORD = /^([^A-Za-zÄÖÜäöüß#]*)(#?)([A-Za-zÄÖÜäöüß]+)([^A-Za-zÄÖÜäöüß]*)$/;
+const GAPS = []; // {id, answer, full}
+function buildCTest(t, maxGaps){
+  let count = 0, made = 0;
+  const parts = t.body.split(/\s+/).map(tok => {
+    const m = tok.match(WORD);
+    if(!m) return tok.replace('#','');
+    const [, pre, skip, word, post] = m;
+    if(skip || word.length < 2 || made >= maxGaps) return pre + word + post;
+    count++;
+    if(count % 2 !== 0) return pre + word + post;
+    const keep = Math.floor(word.length / 2);
+    const shown = word.slice(0, keep), answer = word.slice(keep);
+    const id = 'c' + GAPS.length;
+    GAPS.push({id, answer, full: word});
+    made++;
+    const w = (answer.length + 1.6).toFixed(1);
+    return `${pre}<span class="gap">${shown}<input id="${id}" style="width:${w}ch" maxlength="${word.length + 2}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Lücke ${GAPS.length}"></span>${post}`;
+  });
+  return `<h3>${t.title}</h3><p class="ctext">${t.intro} ${parts.join(' ')} ${t.outro}</p>`;
+}
+document.getElementById('ctests').innerHTML = CTEXTS.map(t => buildCTest(t, 20)).join('');
+
+/* ---------------- MC RENDER ---------------- */
+function renderMC(container, items, prefix, startNum, rowLayout){
+  document.getElementById(container).innerHTML = items.map((q,i) => {
+    const opts = q.o || RFN;
+    return `<div class="q" id="${prefix}${i}">
+      <div class="qt"><b>${startNum + i}.</b> ${q.q.replace('___','<span class="blank">______</span>')}</div>
+      <div class="opts${rowLayout ? ' row' : ''}">${opts.map((o,j) =>
+        `<label class="opt"><input type="radio" name="${prefix}${i}" value="${j}"><span>${q.o ? String.fromCharCode(65+j)+') ' : ''}${o}</span></label>`).join('')}
+      </div>
+      <div class="expl" hidden>${q.e}</div></div>`;
+  }).join('');
+}
+renderMC('gram', GRAM, 'g', 1, false);
+renderMC('lesenA', LESEN_A, 'la', 1, true);
+renderMC('lesenB', LESEN_B, 'lb', 7, false);
+
+/* ---------------- EVALUATION ---------------- */
+const scores = {C:null, G:null, L:null};
+function scoreClass(p){ return p >= 0.8 ? 'good' : p >= 0.6 ? 'mid' : 'low'; }
+function showScore(el, got, max){
+  const s = document.getElementById(el);
+  s.textContent = `${got} / ${max} Punkte (${Math.round(got/max*100)} %)`;
+  s.className = 'score ' + scoreClass(got/max);
+}
+function evalC(){
+  let got = 0;
+  GAPS.forEach(g => {
+    const inp = document.getElementById(g.id);
+    const v = inp.value.trim();
+    const right = v === g.answer || v === g.full;
+    inp.classList.remove('ok','bad');
+    inp.classList.add(right ? 'ok' : 'bad');
+    const next = inp.nextElementSibling;
+    if(next && next.classList.contains('sol')) next.remove();
+    if(right) got++;
+    else inp.insertAdjacentHTML('afterend', `<span class="sol">${g.answer}</span>`);
+  });
+  scores.C = got; showScore('scoreC', got, GAPS.length); updateSummary();
+}
+function evalMC(items, prefix){
+  let got = 0;
+  items.forEach((q,i) => {
+    const box = document.getElementById(prefix + i);
+    const labels = box.querySelectorAll('.opt');
+    labels.forEach(l => l.classList.remove('ok','bad'));
+    const sel = box.querySelector('input:checked');
+    labels[q.a].classList.add('ok');
+    if(sel && +sel.value === q.a) got++;
+    else if(sel) labels[+sel.value].classList.add('bad');
+    box.querySelector('.expl').hidden = false;
+  });
+  return got;
+}
+function evalG(){ scores.G = evalMC(GRAM, 'g'); showScore('scoreG', scores.G, GRAM.length); updateSummary(); }
+function evalL(){
+  scores.L = evalMC(LESEN_A, 'la') + evalMC(LESEN_B, 'lb');
+  showScore('scoreL', scores.L, LESEN_A.length + LESEN_B.length); updateSummary();
+}
+function evalAll(){ evalC(); evalG(); evalL(); document.getElementById('ergebnis').scrollIntoView(); }
+
+function updateSummary(){
+  const maxC = GAPS.length, maxG = GRAM.length, maxL = LESEN_A.length + LESEN_B.length;
+  const f = (v,m) => v === null ? `– / ${m}` : `${v} / ${m}`;
+  document.getElementById('rC').textContent = f(scores.C, maxC);
+  document.getElementById('rG').textContent = f(scores.G, maxG);
+  document.getElementById('rL').textContent = f(scores.L, maxL);
+  const done = Object.values(scores).every(v => v !== null);
+  const total = (scores.C||0) + (scores.G||0) + (scores.L||0), max = maxC + maxG + maxL;
+  document.getElementById('rT').textContent = done ? `${total} / ${max}` : `– / ${max}`;
+  const fb = document.getElementById('feedback');
+  if(!done){ document.getElementById('barFill').style.width = '0'; fb.textContent = 'Werte alle drei Teile aus, um dein Gesamtergebnis zu sehen.'; return; }
+  const p = total / max;
+  document.getElementById('barFill').style.width = Math.round(p*100) + '%';
+  const weakest = [['C-Test', scores.C/maxC], ['Grammatik', scores.G/maxG], ['Leseverstehen', scores.L/maxL]].sort((a,b) => a[1]-b[1])[0][0];
+  fb.innerHTML = `<b>${Math.round(p*100)} % insgesamt.</b> ` + (
+    p >= 0.8 ? 'Sehr gut, du bist auf einem guten Weg! Übe weiter unter Zeitdruck.' :
+    p >= 0.6 ? `Gut, aber da ist noch Luft nach oben. Konzentriere dich besonders auf: <b>${weakest}</b>.` :
+    `Hier brauchst du noch mehr Übung, vor allem im Bereich <b>${weakest}</b>. Lies die Erklärungen oben genau durch.`);
+}
+
+function resetAll(){
+  GAPS.forEach(g => { const i = document.getElementById(g.id); i.value=''; i.classList.remove('ok','bad'); });
+  document.querySelectorAll('.sol').forEach(s => s.remove());
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('.opt').forEach(l => l.classList.remove('ok','bad'));
+  document.querySelectorAll('.expl').forEach(e => e.hidden = true);
+  ['scoreC','scoreG','scoreL'].forEach(id => { const s = document.getElementById(id); s.textContent=''; s.className='score'; });
+  scores.C = scores.G = scores.L = null; updateSummary();
+  document.getElementById('essay').value=''; countWords();
+  stopTimer(); remaining = 3600; renderClock(); document.getElementById('timerBtn').textContent = 'Zeit starten';
+  document.getElementById('banner').classList.remove('show');
+  window.scrollTo(0,0);
+}
+
+/* ---------------- WRITING ---------------- */
+function countWords(){
+  const t = document.getElementById('essay').value.trim();
+  const n = t ? t.split(/\s+/).length : 0;
+  document.getElementById('wc').textContent = `${n} Wörter` + (n && (n < 80 ? ' (zu kurz)' : n > 110 ? ' (etwas zu lang)' : ' ✓'));
+}
+document.getElementById('essay').addEventListener('input', countWords);
+function toggleModel(){ const m = document.getElementById('model'); m.hidden = !m.hidden; }
+
+/* ---------------- TIMER ---------------- */
+let remaining = 3600, timerId = null;
+function renderClock(){
+  const c = document.getElementById('clock');
+  c.textContent = `${String(Math.floor(remaining/60)).padStart(2,'0')}:${String(remaining%60).padStart(2,'0')}`;
+  c.classList.toggle('low', remaining <= 300);
+}
+function stopTimer(){ if(timerId){ clearInterval(timerId); timerId = null; } }
+document.getElementById('timerBtn').addEventListener('click', e => {
+  if(timerId){ stopTimer(); e.target.textContent = 'Weiter'; return; }
+  if(remaining <= 0) remaining = 3600;
+  e.target.textContent = 'Pause';
+  timerId = setInterval(() => {
+    remaining--; renderClock();
+    if(remaining <= 0){ stopTimer(); e.target.textContent = 'Neu starten'; document.getElementById('banner').classList.add('show'); }
+  }, 1000);
+});
+
+/* ---------------- SAVE / HISTORY ---------------- */
+const SKEY = 'uebungstest2_state', HKEY = 'uebungstest2_history';
+function load(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+function store(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+let attemptId = load(SKEY, {}).attempt || Date.now();
+
+function saveState(){
+  const st = {attempt: attemptId, c:{}, r:{}, essay: document.getElementById('essay').value,
+              evaluated: {C: scores.C !== null, G: scores.G !== null, L: scores.L !== null}};
+  GAPS.forEach(g => { const v = document.getElementById(g.id).value; if(v) st.c[g.id] = v; });
+  document.querySelectorAll('input[type=radio]:checked').forEach(r => st.r[r.name] = r.value);
+  store(SKEY, st);
+}
+document.addEventListener('input', saveState);
+document.addEventListener('change', saveState);
+
+function recordHistory(){
+  const maxC = GAPS.length, maxG = GRAM.length, maxL = LESEN_A.length + LESEN_B.length;
+  const all = load(HKEY, []), prev = all.find(x => x.id === attemptId);
+  const h = all.filter(x => x.id !== attemptId);
+  h.push({id: attemptId, date: prev ? prev.date : new Date().toISOString(), C: scores.C, G: scores.G, L: scores.L,
+          total: scores.C + scores.G + scores.L, max: maxC + maxG + maxL});
+  store(HKEY, h); renderHistory();
+}
+function renderHistory(){
+  const h = load(HKEY, []), t = document.getElementById('histTable');
+  if(!h.length){ t.innerHTML = '<tr><td class="meta">Noch keine Versuche gespeichert.</td></tr>'; return; }
+  t.innerHTML = '<tr><td><b>Datum</b></td><td class="n">C-Test</td><td class="n">Gramm.</td><td class="n">Lesen</td><td class="n">Gesamt</td></tr>' +
+    h.slice().reverse().map(x => {
+      const d = new Date(x.date);
+      const ds = d.toLocaleDateString('de-DE') + ' ' + d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
+      return `<tr><td>${ds}</td><td class="n">${x.C}</td><td class="n">${x.G}</td><td class="n">${x.L}</td><td class="n">${x.total} / ${x.max} (${Math.round(x.total/x.max*100)} %)</td></tr>`;
+    }).join('');
+}
+
+// Hook into evaluation and reset
+const _update = updateSummary;
+updateSummary = function(){
+  _update();
+  saveState();
+  if(Object.values(scores).every(v => v !== null)) recordHistory();
+};
+const _reset = resetAll;
+resetAll = function(){
+  attemptId = Date.now();
+  _reset();
+  saveState();
+};
+
+// Restore saved answers on load
+(function restore(){
+  const st = load(SKEY, null);
+  if(!st) return;
+  Object.entries(st.c || {}).forEach(([id, v]) => { const i = document.getElementById(id); if(i) i.value = v; });
+  Object.entries(st.r || {}).forEach(([name, v]) => {
+    const r = document.querySelector(`input[name="${name}"][value="${v}"]`); if(r) r.checked = true;
+  });
+  if(st.essay){ document.getElementById('essay').value = st.essay; countWords(); }
+  const ev = st.evaluated || {};
+  if(ev.C) evalC(); if(ev.G) evalG(); if(ev.L) evalL();
+})();
+renderHistory();
+updateSummary();
+</script>
+</body>
+</html>
